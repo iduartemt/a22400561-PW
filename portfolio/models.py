@@ -88,3 +88,31 @@ class Formacao(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+#Projetos
+class Projeto(models.Model):
+    titulo = models.CharField(max_length=100)
+    descricao = models.TextField()
+    conceitos_aplicados = models.TextField()
+    ano = models.IntegerField()
+    github_url = models.URLField()
+
+    unidade_curricular = models.ForeignKey(
+        UnidadeCurricular,
+        on_delete=models.CASCADE,
+        related_name='projetos'
+    )
+
+    tecnologias = models.ManyToManyField(
+        Tecnologia,
+        related_name='projetos'
+    )
+
+    competencias = models.ManyToManyField(
+        Competencia,
+        related_name='projetos',
+        blank=True
+    )
+
+    def __str__(self):
+        return self.titulo
