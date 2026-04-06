@@ -9,3 +9,11 @@ class Licenciatura(models.Model):
 
     def __str__(self):
         return self.nome
+    
+class Docente(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    pagina_lusofona = models.URLField()
+
+    def __str__(self):
+        return self.nome
