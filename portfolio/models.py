@@ -140,3 +140,18 @@ class TFC(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+#InteresseProfissional
+class InteresseProfissional(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    area = models.CharField(max_length=100)
+
+    tecnologias = models.ManyToManyField(
+        Tecnologia,
+        related_name='interesses',
+        blank=True
+    )
+
+    def __str__(self):
+        return self.nome
