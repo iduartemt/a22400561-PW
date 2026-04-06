@@ -155,3 +155,15 @@ class InteresseProfissional(models.Model):
 
     def __str__(self):
         return self.nome
+    
+#MakingOf
+class MakingOf(models.Model):
+    titulo = models.CharField(max_length=100)
+    descricao_processo = models.TextField(blank=True)
+    decisoes_tomadas = models.TextField(blank=True)
+    erros_correcao = models.TextField(blank=True)
+    justificacao_modelacao = models.TextField(blank=True)
+    uso_ia = models.TextField(blank=True)
+    evidencia = models.CharField(max_length=255, blank=True)
+    data = models.DateField()
+    tipo_registo = models.CharField(max_length=50)
