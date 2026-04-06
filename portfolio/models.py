@@ -116,3 +116,27 @@ class Projeto(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+#TFC
+class TFC(models.Model):
+    titulo = models.CharField(max_length=200)
+    autor = models.CharField(max_length=100)
+    orientador = models.CharField(max_length=100)
+    ano = models.IntegerField()
+    area = models.CharField(max_length=100)
+    destaque = models.BooleanField(default=False)
+
+    tecnologias = models.ManyToManyField(
+        Tecnologia,
+        related_name='tfcs',
+        blank=True
+    )
+
+    competencias = models.ManyToManyField(
+        Competencia,
+        related_name='tfcs',
+        blank=True
+    )
+
+    def __str__(self):
+        return self.titulo
