@@ -41,3 +41,13 @@ class UnidadeCurricular(models.Model):
 
     def __str__(self):
         return self.nome
+    
+#Tecnologia
+class Tecnologia(models.Model):
+    nome = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=50)
+    descricao = models.TextField()
+    website_oficial = models.URLField()
+    
+    def __str__(self):
+        return self.nome
