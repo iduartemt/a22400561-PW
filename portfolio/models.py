@@ -120,11 +120,24 @@ class Projeto(models.Model):
     
 # ----------------------------TFC---------------------------- 
 class TFC(models.Model):
-    titulo = models.CharField(max_length=200)
-    autor = models.CharField(max_length=100)
-    orientador = models.CharField(max_length=100)
-    ano = models.IntegerField()
-    area = models.CharField(max_length=100)
+    titulo = models.CharField(max_length=300)
+    autor = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Relação com o modelo Docente
+    orientador = models.ForeignKey(
+        Docente,
+        on_delete=models.SET_NULL, # Se apagares o docente da BD, o TFC não é apagado (o orientador passa a Null)
+        related_name='tfcs_orientados',
+        blank=True, 
+        null=True
+    )
+    
+    curso = models.CharField(max_length=150, blank=True, null=True)
+    ano = models.IntegerField(blank=True, null=True)
+    resumo = models.TextField(blank=True, null=True)
+    palavras_chave = models.CharField(max_length=250, blank=True, null=True)
+    
+    area = models.CharField(max_length=100, blank=True, null=True)
     destaque = models.BooleanField(default=False)
 
     tecnologias = models.ManyToManyField(
@@ -139,8 +152,6 @@ class TFC(models.Model):
         blank=True
     )
 
-
-
     def __str__(self):
         return self.titulo
     
@@ -148,13 +159,6 @@ class TFC(models.Model):
 class Aluno(models.Model):
     nome = models.CharField(max_length=100)
     email = models.TextField()
-
-    TFCs = models.ForeignKey(
-        TFC,
-        on_delete=models.CASCADE,
-        related_name='alunos',
-        blank=True
-    )
 
 
     def __str__(self):
