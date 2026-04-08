@@ -7,6 +7,9 @@ class Licenciatura(models.Model):
     sigla = models.CharField(max_length=20)
     descricao = models.TextField()
     duracao_anos = models.IntegerField()
+    diploma_degree = models.CharField(max_length=50, blank=True)
+    course_code = models.IntegerField(blank=True, null=True)
+    reasons = models.JSONField(blank=True, null=True)  # Lista de razões para escolher o curso
 
     def __str__(self):
         return self.nome
@@ -28,6 +31,20 @@ class UnidadeCurricular(models.Model):
     ano = models.IntegerField()
     semestre = models.IntegerField()
     ects = models.IntegerField()
+    curricular_unit_code = models.IntegerField(unique=True, blank=True, null=True)
+    language = models.CharField(max_length=20, blank=True)
+    nature = models.CharField(max_length=20, blank=True)
+    type = models.CharField(max_length=20, blank=True)
+    internship = models.CharField(max_length=10, blank=True)
+    objectives = models.TextField(blank=True)
+    programme = models.TextField(blank=True)
+    presentation = models.TextField(blank=True)
+    bibliography = models.TextField(blank=True)
+    assessment = models.TextField(blank=True)
+    methodology = models.TextField(blank=True)
+    organic_unit = models.CharField(max_length=100, blank=True)
+    group_code = models.IntegerField(blank=True, null=True)
+    institution_code = models.IntegerField(blank=True, null=True)
 
     licenciatura = models.ForeignKey(
         Licenciatura,

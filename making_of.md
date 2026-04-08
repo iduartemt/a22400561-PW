@@ -51,3 +51,35 @@ Ao alterar campos do modelo já existente, surgiram problemas de migração por 
 Foi utilizado o ChatGPT como ferramenta de apoio na interpretação do enunciado, validação das relações entre entidades, boas práticas de Django e organização incremental do projeto.
 
 Todas as decisões foram revistas, implementadas e justificadas manualmente, garantindo compreensão total do funcionamento e capacidade de adaptação na defesa.
+
+## 7. Revisão da Modelação com Dados da API Lusófona
+
+Após explorar os dados disponíveis nos ficheiros JSON das APIs da Lusófona, procedeu-se a uma revisão da modelação para incorporar informações relevantes do curso e das unidades curriculares.
+
+### Dados Disponíveis
+- **Curso Geral (ULHT260-PT.json)**: Contém `reasons` (razões para escolher o curso) e `courseFlatPlan` (lista de UCs com códigos, nomes, anos, semestres, ECTS, etc.).
+- **Detalhes das UCs (ULHT260-XXX-PT.json)**: Incluem `objectives`, `programme`, `presentation`, `bibliography`, `assessment`, `methodology`, `language`, `nature`, `type`, `internship`, `organicUnit`, etc.
+
+### Alterações na Modelação
+
+#### Licenciatura
+- Adicionados campos: `diploma_degree`, `course_code`, `reasons` (JSONField para armazenar lista de razões).
+- Justificação: Captura metadados do curso geral, enriquecendo a entidade sem complexidade excessiva.
+
+#### UnidadeCurricular
+- Adicionados campos: `curricular_unit_code` (único, chave de integração), `language`, `nature`, `type`, `internship`, `objectives`, `programme`, `presentation`, `bibliography`, `assessment`, `methodology`, `organic_unit`, `group_code`, `institution_code`.
+- Justificação: Os dados da API fornecem conteúdo rico em texto/HTML para objetivos, programa, bibliografia e avaliação, essenciais para um portfólio académico. Mantidos como TextField para preservar formatação. Não foi criada entidade separada para evitar normalização desnecessária, já que são atributos complementares da UC.
+
+### Implementação do Import
+- Criado script `import_cursos_uc_doJson.py` que:
+  - Importa curso geral e cria Licenciatura.
+  - Processa `courseFlatPlan` para criar UCs básicas.
+  - Enriquecce UCs com detalhes dos ficheiros individuais.
+- Resultado: 1 Licenciatura e 31 Unidades Curriculares importadas com sucesso, incluindo conteúdos detalhados.
+
+### Decisões Não Tomadas
+- Não foi criada entidade `Curso` separada de `Licenciatura`, pois o foco é o portfólio pessoal e a entidade existente serve bem.
+- Não foi normalizada `programme` em módulos/tópicos, mantendo como texto estruturado para simplicidade.
+- Competências não foram extraídas automaticamente dos objetivos/programas, ficando para mapeamento manual posterior.
+
+Esta revisão garante que a aplicação agora reflete fielmente a estrutura e conteúdo do curso da Lusófona, proporcionando uma base sólida para o portfólio académico.
