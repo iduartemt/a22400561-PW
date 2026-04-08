@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Curso</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .reason { background-color: #f9f9f9; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>{{ licenciatura.nome }}</h1>
+    <p><strong>Grau:</strong> {{ licenciatura.diploma_degree }}</p>
+    <p><strong>Código:</strong> {{ licenciatura.course_code }}</p>
+    <p><strong>Duração:</strong> {{ licenciatura.duracao_anos }} anos</p>
+    <p><strong>Descrição:</strong> {{ licenciatura.descricao }}</p>
+    
+    {% if licenciatura.reasons %}
+        <h3>Por que escolher este curso?</h3>
+        {% for reason in licenciatura.reasons %}
+            <div class="reason">
+                <p>{{ reason.reason }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <p><a href="{% url 'home' %}">← Voltar ao plano curricular</a></p>
+</body>
+</html>

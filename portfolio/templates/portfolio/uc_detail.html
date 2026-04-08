@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ uc.nome }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .section h3 { margin-top: 0; color: #333; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>{{ uc.nome }}</h1>
+    
+    <div class="section">
+        <h3>Informações Gerais</h3>
+        <p><strong>Ano:</strong> {{ uc.ano }}</p>
+        <p><strong>Semestre:</strong> 
+            {% if uc.semestre == 1 %}1º Semestre{% elif uc.semestre == 2 %}2º Semestre{% else %}{{ uc.type }}{% endif %}
+        </p>
+        <p><strong>ECTS:</strong> {{ uc.ects }}</p>
+        <p><strong>Código:</strong> {{ uc.curricular_unit_code }}</p>
+        {% if uc.language %}<p><strong>Idioma:</strong> {{ uc.language }}</p>{% endif %}
+        {% if uc.nature %}<p><strong>Natureza:</strong> {{ uc.nature }}</p>{% endif %}
+        {% if uc.type %}<p><strong>Tipo:</strong> {{ uc.type }}</p>{% endif %}
+        {% if uc.organic_unit %}<p><strong>Unidade Orgânica:</strong> {{ uc.organic_unit }}</p>{% endif %}
+    </div>
+    
+    {% if uc.objectives %}
+    <div class="section">
+        <h3>Objetivos</h3>
+        <div>{{ uc.objectives|safe }}</div>
+    </div>
+    {% endif %}
+    
+    {% if uc.presentation %}
+    <div class="section">
+        <h3>Apresentação</h3>
+        <div>{{ uc.presentation|safe }}</div>
+    </div>
+    {% endif %}
+    
+    {% if uc.programme %}
+    <div class="section">
+        <h3>Programa</h3>
+        <div>{{ uc.programme|safe }}</div>
+    </div>
+    {% endif %}
+    
+    {% if uc.methodology %}
+    <div class="section">
+        <h3>Metodologia</h3>
+        <div>{{ uc.methodology|safe }}</div>
+    </div>
+    {% endif %}
+    
+    {% if uc.assessment %}
+    <div class="section">
+        <h3>Avaliação</h3>
+        <div>{{ uc.assessment|safe }}</div>
+    </div>
+    {% endif %}
+    
+    {% if uc.bibliography %}
+    <div class="section">
+        <h3>Bibliografia</h3>
+        <div>{{ uc.bibliography|safe }}</div>
+    </div>
+    {% endif %}
+    
+    <p><a href="{% url 'home' %}">← Voltar ao plano curricular</a></p>
+</body>
+</html>

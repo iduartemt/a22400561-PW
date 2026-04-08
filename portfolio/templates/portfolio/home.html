@@ -1,10 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Portfolio</title>
+    <title>Portfolio Acadêmico</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .ano { background-color: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .uc { margin: 5px 0; padding: 5px; border-left: 3px solid #007bff; }
+        .ects { font-weight: bold; color: #007bff; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo ao Portfolio</h1>
-    <p>Este é seu página inicial.</p>
+    <h1>Portfolio Acadêmico</h1>
+    
+    {% if licenciatura %}
+        <h2>{{ licenciatura.nome }} - {{ licenciatura.diploma_degree }}</h2>
+        <p><a href="{% url 'curso_detail' %}">Ver detalhes do curso</a></p>
+        
+        <h3>Plano Curricular</h3>
+        {% for ano, ucs in ucs_por_ano.items %}
+            <div class="ano">
+                <h4>Ano {{ ano }}</h4>
+                {% for uc in ucs %}
+                    <div class="uc">
+                        <strong><a href="{% url 'uc_detail' uc.id %}">{{ uc.nome }}</a></strong>
+                        <span class="ects">({{ uc.ects }} ECTS)</span>
+                        {% if uc.semestre == 1 %}
+                            - 1º Semestre
+                        {% elif uc.semestre == 2 %}
+                            - 2º Semestre
+                        {% endif %}
+                        {% if uc.nature %}
+                            - {{ uc.nature }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum curso encontrado.</p>
+    {% endif %}
 </body>
 </html>
