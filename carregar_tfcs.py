@@ -71,17 +71,18 @@ def imprimir_erro(texto):
 def carregar_dados():
     caminho_ficheiro = 'portfolio/tfcs_2025.json'
 
-    imprimir_aviso('A apagar dados antigos...')
-    Licenciatura.objects.all().delete()
-    UnidadeCurricular.objects.all().delete()
-    Docente.objects.all().delete()
-    Aluno.objects.all().delete()
+    imprimir_aviso('A apagar apenas TFCs, Tecnologias e Competências antigas...')
+    # Não apagar Licenciatura, UnidadeCurricular, Docente (já importados)
+    # Licenciatura.objects.all().delete()
+    # UnidadeCurricular.objects.all().delete()
+    # Docente.objects.all().delete()
+    # Aluno.objects.all().delete()
     Competencia.objects.all().delete()
     Tecnologia.objects.all().delete()
-    Projeto.objects.all().delete()
-    Formacao.objects.all().delete()
+    # Projeto.objects.all().delete()
+    # Formacao.objects.all().delete()
     TFC.objects.all().delete()
-    imprimir_sucesso('Dados antigos apagados.')
+    imprimir_sucesso('Dados antigos de TFC/Tecnologia/Competência apagados.')
 
     with open(caminho_ficheiro, 'r', encoding='utf-8') as f:
         dados_tfcs = json.load(f)
@@ -110,13 +111,19 @@ def carregar_dados():
         nomes_orientadores = limpar_lista(item.get('orientador'))
 
         for nome_orientador in nomes_orientadores:
-            docente_obj, created = Docente.objects.get_or_create(nome=nome_orientador)
+            # Primeiro tentar encontrar docente existente (importado da Lusófona)
+            docente_obj = Docente.objects.filter(nome__icontains=nome_orientador).first()
+            created = False
+            
+            if not docente_obj:
+                # Se não encontrou, criar novo docente
+                docente_obj, created = Docente.objects.get_or_create(nome=nome_orientador)
 
             if created:
                 total_docentes_criados += 1
                 imprimir_sucesso(f"  Docente criado: {nome_orientador}")
             else:
-                imprimir_aviso(f"  Docente já existia: {nome_orientador}")
+                imprimir_aviso(f"  Docente encontrado/usado: {docente_obj.nome}")
 
             orientadores_objs.append(docente_obj)
 

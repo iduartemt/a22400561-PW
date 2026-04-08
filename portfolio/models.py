@@ -18,8 +18,17 @@ class Licenciatura(models.Model):
 class Docente(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
-    imagem = models.ImageField(upload_to='docentes/', blank = True)
+    imagem = models.ImageField(upload_to='docentes/', blank=True)
     pagina_lusofona = models.URLField(blank=True)
+    
+    # Campos adicionais dos dados Lusófona
+    card_code = models.IntegerField(blank=True, null=True, unique=True)
+    degree = models.CharField(max_length=50, blank=True)
+    employee_code = models.IntegerField(blank=True, null=True)
+    regimen = models.CharField(max_length=50, blank=True)
+    ciencia_vitae = models.CharField(max_length=20, blank=True)
+    orcid = models.CharField(max_length=20, blank=True)
+    academic_name = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.nome

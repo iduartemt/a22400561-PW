@@ -9,7 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 import django
 django.setup()
 
-from portfolio.models import Licenciatura, UnidadeCurricular
+from portfolio.models import Licenciatura, UnidadeCurricular, Docente
 
 def importar_curso():
     # Limpar dados existentes
@@ -23,6 +23,22 @@ def importar_curso():
     curso_file = os.path.join(files_dir, 'ULHT260-PT.json')
     with open(curso_file, 'r', encoding='utf-8') as f:
         curso_data = json.load(f)
+
+    # Importar docentes
+    for teacher_data in curso_data.get('teachers', []):
+        Docente.objects.get_or_create(
+            card_code=teacher_data['cardCode'],
+            defaults={
+                'nome': teacher_data['fullName'],
+                'email': teacher_data.get('email', ''),
+                'degree': teacher_data.get('degree', ''),
+                'employee_code': teacher_data.get('employeeCode'),
+                'regimen': teacher_data.get('regimen', ''),
+                'ciencia_vitae': teacher_data.get('cienciaVitae', ''),
+                'orcid': teacher_data.get('orcid', ''),
+                'academic_name': teacher_data.get('academicName', ''),
+            }
+        )
 
     # Criar Licenciatura
     licenciatura, created = Licenciatura.objects.get_or_create(

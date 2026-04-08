@@ -73,9 +73,18 @@ Após explorar os dados disponíveis nos ficheiros JSON das APIs da Lusófona, p
 ### Implementação do Import
 - Criado script `import_cursos_uc_doJson.py` que:
   - Importa curso geral e cria Licenciatura.
+  - Importa lista completa de docentes da Lusófona (158 docentes, 42 com dados completos incluindo grau académico, regime, ORCID, Ciência Vitae).
   - Processa `courseFlatPlan` para criar UCs básicas.
   - Enriquecce UCs com detalhes dos ficheiros individuais.
-- Resultado: 1 Licenciatura e 31 Unidades Curriculares importadas com sucesso, incluindo conteúdos detalhados.
+- Modificado script `carregar_tfcs.py` para preservar dados importados da Lusófona e reutilizar docentes existentes.
+- Resultado: Integração completa dos dados Lusófona com dados dos TFCs.
+
+### Dados Finais Importados
+- **1 Licenciatura**: Engenharia Informática (com 6 razões para escolher o curso)
+- **31 Unidades Curriculares**: Com conteúdo detalhado (objetivos, programas, bibliografia, avaliação)
+- **158 Docentes**: 42 com dados completos da Lusófona + docentes dos TFCs
+- **559 TFCs**: Com orientadores associados e tecnologias
+- **275 Tecnologias**: Extraídas dos TFCs
 
 ### Decisões Não Tomadas
 - Não foi criada entidade `Curso` separada de `Licenciatura`, pois o foco é o portfólio pessoal e a entidade existente serve bem.
