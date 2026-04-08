@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-#Licenciatura
+# ----------------------------LICENCIATURA---------------------------- 
 class Licenciatura(models.Model):
     nome = models.CharField(max_length=100)
     sigla = models.CharField(max_length=20)
@@ -11,17 +11,18 @@ class Licenciatura(models.Model):
     def __str__(self):
         return self.nome
 
-#Docente    
+# ----------------------------DOCENTE---------------------------- 
 class Docente(models.Model):
     nome = models.CharField(max_length=100)
-    email = models.EmailField()
-    pagina_lusofona = models.URLField()
+    email = models.EmailField(blank=True)
+    imagem = models.ImageField(upload_to='docentes/', blank = True)
+    pagina_lusofona = models.URLField(blank=True)
 
     def __str__(self):
         return self.nome
     
 
-#unidade Curricular
+# ----------------------------UNIDADE CURRICULAR---------------------------- 
 class UnidadeCurricular(models.Model):
     nome = models.CharField(max_length=100)
     ano = models.IntegerField()
@@ -42,7 +43,7 @@ class UnidadeCurricular(models.Model):
     def __str__(self):
         return self.nome
     
-#Tecnologia
+# ----------------------------TECNOLOGIA---------------------------- 
 class Tecnologia(models.Model):
     nome = models.CharField(max_length=100)
     tipo = models.CharField(max_length=50)
@@ -52,7 +53,7 @@ class Tecnologia(models.Model):
     def __str__(self):
         return self.nome
     
-#Competencias
+# ----------------------------COMPETENCIA---------------------------- 
 class Competencia(models.Model):
     nome = models.CharField(max_length=100)
     tipo = models.CharField(max_length=50)
@@ -67,7 +68,7 @@ class Competencia(models.Model):
     def __str__(self):
         return self.nome
     
-#Formacao
+# ----------------------------FORMAÇÃO---------------------------- 
 class Formacao(models.Model):
     titulo = models.CharField(max_length=100)
     instituicao = models.CharField(max_length=100)
@@ -89,7 +90,7 @@ class Formacao(models.Model):
     def __str__(self):
         return self.titulo
     
-#Projetos
+# ----------------------------PROJETOS---------------------------- 
 class Projeto(models.Model):
     titulo = models.CharField(max_length=100)
     descricao = models.TextField()
@@ -117,7 +118,7 @@ class Projeto(models.Model):
     def __str__(self):
         return self.titulo
     
-#TFC
+# ----------------------------TFC---------------------------- 
 class TFC(models.Model):
     titulo = models.CharField(max_length=200)
     autor = models.CharField(max_length=100)
@@ -138,27 +139,32 @@ class TFC(models.Model):
         blank=True
     )
 
+
+
     def __str__(self):
         return self.titulo
     
-#InteresseProfissional
-class InteresseProfissional(models.Model):
+# ----------------------------ALUNO---------------------------- 
+class Aluno(models.Model):
     nome = models.CharField(max_length=100)
-    descricao = models.TextField()
-    area = models.CharField(max_length=100)
+    email = models.TextField()
 
-    tecnologias = models.ManyToManyField(
-        Tecnologia,
-        related_name='interesses',
+    TFCs = models.ForeignKey(
+        TFC,
+        on_delete=models.CASCADE,
+        related_name='alunos',
         blank=True
     )
+
 
     def __str__(self):
         return self.nome
     
-#MakingOf
+# ----------------------------MAKING OF---------------------------- 
 class MakingOf(models.Model):
     titulo = models.CharField(max_length=100)
+    entidade = models.CharField(max_length=100)
+    imagem = models.ImageField(upload_to='makingof/', blank=True)
     descricao_processo = models.TextField(blank=True)
     decisoes_tomadas = models.TextField(blank=True)
     erros_correcao = models.TextField(blank=True)
