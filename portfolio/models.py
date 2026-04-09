@@ -1,6 +1,8 @@
 from django.db import models
 
-# Create your models here.
+# Definição dos modelos do portfólio académico.
+# Cada classe corresponde a uma tabela na base de dados.
+
 # ----------------------------LICENCIATURA---------------------------- 
 class Licenciatura(models.Model):
     nome = models.CharField(max_length=100)

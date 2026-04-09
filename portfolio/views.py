@@ -1,6 +1,9 @@
+# Views do Django para renderizar as páginas do portfolio.
+# Aqui carregamos os dados dos modelos e enviamos para os templates.
 from django.shortcuts import render, get_object_or_404
 from .models import Licenciatura, UnidadeCurricular
 
+# Página inicial: lista o curso e organiza as UCs por ano.
 def home(request):
     licenciatura = Licenciatura.objects.first()
     ucs_por_ano = {}
@@ -16,6 +19,7 @@ def home(request):
     }
     return render(request, 'portfolio/home.html', context)
 
+# Página de detalhe do curso: mostra informação geral do curso.
 def curso_detail(request):
     licenciatura = get_object_or_404(Licenciatura)
     context = {

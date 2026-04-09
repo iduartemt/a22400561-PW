@@ -3,6 +3,7 @@ import django
 import json
 import re
 
+# Configura o ambiente Django para permitir o carregamento de dados via script.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
@@ -18,14 +19,18 @@ from portfolio.models import (
     TFC,
 )
 
+# Script responsável por carregar os TFCs, mantendo intactos os dados de curso e docentes já importados.
 
 def limpar_texto(valor):
+    # Normaliza valores textuais para remover espaços e tratar None.
     if valor is None:
         return ''
     return str(valor).strip()
 
 
 def limpar_lista(valor):
+    # Converte listas e strings em lista de itens limpos, separando por ponto e vírgula.
+
     if not valor:
         return []
 
@@ -72,15 +77,9 @@ def carregar_dados():
     caminho_ficheiro = 'portfolio/tfcs_2025.json'
 
     imprimir_aviso('A apagar apenas TFCs, Tecnologias e Competências antigas...')
-    # Não apagar Licenciatura, UnidadeCurricular, Docente (já importados)
-    # Licenciatura.objects.all().delete()
-    # UnidadeCurricular.objects.all().delete()
-    # Docente.objects.all().delete()
-    # Aluno.objects.all().delete()
+    # Preserva os dados do curso e dos docentes já importados da Lusófona.
     Competencia.objects.all().delete()
     Tecnologia.objects.all().delete()
-    # Projeto.objects.all().delete()
-    # Formacao.objects.all().delete()
     TFC.objects.all().delete()
     imprimir_sucesso('Dados antigos de TFC/Tecnologia/Competência apagados.')
 
@@ -111,12 +110,12 @@ def carregar_dados():
         nomes_orientadores = limpar_lista(item.get('orientador'))
 
         for nome_orientador in nomes_orientadores:
-            # Primeiro tentar encontrar docente existente (importado da Lusófona)
+            # Tenta reutilizar um docente já importado pelos cursos da Lusófona.
             docente_obj = Docente.objects.filter(nome__icontains=nome_orientador).first()
             created = False
             
             if not docente_obj:
-                # Se não encontrou, criar novo docente
+                # Se não existe, cria um novo registo de docente.
                 docente_obj, created = Docente.objects.get_or_create(nome=nome_orientador)
 
             if created:

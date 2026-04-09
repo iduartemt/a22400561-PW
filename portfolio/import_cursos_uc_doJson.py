@@ -3,13 +3,15 @@ import sys
 import json
 import glob
 
-# Adicionar o diretório do projeto ao path
+# Configura o ambiente Django para aceder aos modelos fora do contexto do servidor.
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 import django
 django.setup()
 
 from portfolio.models import Licenciatura, UnidadeCurricular, Docente
+
+# Script de importação dos dados de curso e unidades curriculares da Lusófona.
 
 def importar_curso():
     # Limpar dados existentes
@@ -19,12 +21,12 @@ def importar_curso():
     # Caminho para os arquivos
     files_dir = os.path.join(os.path.dirname(__file__), 'files')
 
-    # Importar curso geral
+    # Importar curso geral a partir do ficheiro JSON do curso.
     curso_file = os.path.join(files_dir, 'ULHT260-PT.json')
     with open(curso_file, 'r', encoding='utf-8') as f:
         curso_data = json.load(f)
 
-    # Importar docentes
+    # Importar a lista de docentes do curso, criando registos novos quando necessário.
     for teacher_data in curso_data.get('teachers', []):
         Docente.objects.get_or_create(
             card_code=teacher_data['cardCode'],
@@ -68,11 +70,11 @@ def importar_curso():
             }
         )
 
-    # Importar detalhes das UCs
+    # Importar os detalhes de cada Unidade Curricular individual.
     uc_files = glob.glob(os.path.join(files_dir, 'ULHT260-*-PT.json'))
     for uc_file in uc_files:
         if os.path.basename(uc_file) == 'ULHT260-PT.json':
-            continue  # Já processado
+            continue  # Ignora o ficheiro geral do curso, apenas queremos UCs específicas
 
         with open(uc_file, 'r', encoding='utf-8') as f:
             uc_detail = json.load(f)

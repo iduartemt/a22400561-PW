@@ -1,7 +1,9 @@
+# Configuração do painel de administração do Django.
+# Cada modelo registado aqui fica disponível para edição no admin.
 from django.contrib import admin
 from .models import Licenciatura, Docente, UnidadeCurricular, Tecnologia, Competencia, Formacao, Projeto, TFC, Aluno, MakingOf
 
-# Register your models here.
+# Regista o modelo Licenciatura no admin e configura as colunas exibidas.
 @admin.register(Licenciatura)
 class LicenciaturaAdmin(admin.ModelAdmin):
     list_display = ('nome', 'sigla', 'duracao_anos')
@@ -57,6 +59,7 @@ class AlunoAdmin(admin.ModelAdmin):
 
 @admin.register(MakingOf)
 class MakingOfAdmin(admin.ModelAdmin):
+    # Configura a exibição e pesquisa dos registos de making of.
     list_display = ('titulo', 'tipo_registo', 'data')
     search_fields = (
         'titulo',
