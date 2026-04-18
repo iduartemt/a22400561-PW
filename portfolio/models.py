@@ -174,6 +174,12 @@ class TFC(models.Model):
         blank=True
     )
 
+    alunos = models.ManyToManyField(
+        'Aluno',
+        related_name='alunos',
+        blank=True
+    )
+
     competencias = models.ManyToManyField(
         Competencia,
         related_name='tfcs',
