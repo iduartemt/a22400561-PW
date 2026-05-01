@@ -92,3 +92,17 @@ Após explorar os dados disponíveis nos ficheiros JSON das APIs da Lusófona, p
 - Competências não foram extraídas automaticamente dos objetivos/programas, ficando para mapeamento manual posterior.
 
 Esta revisão garante que a aplicação agora reflete fielmente a estrutura e conteúdo do curso da Lusófona, proporcionando uma base sólida para o portfólio académico.
+
+## 8. Povoamento da Base de Dados (Teste)
+**Data:** 30/04/2026
+
+Para garantir que todas as funcionalidades e templates da aplicação pudessem ser validados, foram inseridos dados de teste em todas as tabelas que se encontravam vazias ou com poucos dados.
+
+### Ações Realizadas:
+- **Licenciatura**: Adicionadas 2 novas licenciaturas (totalizando 3).
+- **Competência**: Criadas 3 competências técnicas (totalizando 3) associadas aleatoriamente a tecnologias existentes.
+- **Formação**: Criadas 3 formações profissionais (totalizando 3) associadas a licenciaturas e competências.
+- **Projeto**: Criados 3 projetos (totalizando 3) associados a unidades curriculares, tecnologias e competências.
+- **Aluno**: Verificado que já existiam 3 alunos registados.
+
+Esta etapa permitiu verificar o correto funcionamento das relações ManyToMany e ForeignKey nos templates da aplicação e no Django Admin.
