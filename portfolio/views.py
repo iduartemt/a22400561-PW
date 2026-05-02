@@ -6,22 +6,16 @@ from .models import Licenciatura, UnidadeCurricular
 # Página inicial: lista o curso e organiza as UCs por ano.
 def home(request):
     licenciatura = Licenciatura.objects.first()
-    ucs_por_ano = {}
-    for uc in UnidadeCurricular.objects.all().order_by('ano', 'semestre', 'nome'):
-        ano = uc.ano
-        if ano not in ucs_por_ano:
-            ucs_por_ano[ano] = []
-        ucs_por_ano[ano].append(uc)
     
     context = {
         'licenciatura': licenciatura,
-        'ucs_por_ano': ucs_por_ano,
     }
     return render(request, 'portfolio/home.html', context)
 
 # Página de detalhe do curso: mostra informação geral do curso.
 def curso_detail(request):
-    licenciatura = get_object_or_404(Licenciatura)
+    licenciatura = Licenciatura.objects.first()
+    
     context = {
         'licenciatura': licenciatura,
     }
@@ -33,3 +27,20 @@ def uc_detail(request, uc_id):
         'uc': uc,
     }
     return render(request, 'portfolio/uc_detail.html', context)
+
+## Adiciona esta nova função para as UCs
+def ucs_view(request):
+    #buscar a lógica de agrupar por anos que tinhas na home
+    ucs_por_ano = {}
+    for uc in UnidadeCurricular.objects.all().order_by('ano', 'semestre', 'nome'):
+        ano = uc.ano
+        if ano not in ucs_por_ano:
+            ucs_por_ano[ano] = []
+        ucs_por_ano[ano].append(uc)
+    
+    context = {
+        'ucs_por_ano': ucs_por_ano,
+    }
+    # Mandamos os dados para um novo ficheiro chamado ucs.html
+    return render(request, 'portfolio/ucs.html', context)
+

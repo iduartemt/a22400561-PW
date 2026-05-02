@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Portfolio Acadêmico</title>
+    <title>Portfolio Acadêmico - Home</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .ano { background-color: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
-        .uc { margin: 5px 0; padding: 5px; border-left: 3px solid #007bff; }
-        .ects { font-weight: bold; color: #007bff; }
-        a { text-decoration: none; color: #007bff; }
-        a:hover { text-decoration: underline; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        .menu-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .menu-btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Portfolio Acadêmico</h1>
-    
+    <h1>Menu Principal - Portfolio</h1>
+
     {% if licenciatura %}
-        <h2>{{ licenciatura.nome }} - {{ licenciatura.diploma_degree }}</h2>
-        <p><a href="{% url 'curso_detail' %}">Ver detalhes do curso</a></p>
-        
-        <h3>Plano Curricular</h3>
-        {% for ano, ucs in ucs_por_ano.items %}
-            <div class="ano">
-                <h4>Ano {{ ano }}</h4>
-                {% for uc in ucs %}
-                    <div class="uc">
-                        <strong><a href="{% url 'uc_detail' uc.id %}">{{ uc.nome }}</a></strong>
-                        <span class="ects">({{ uc.ects }} ECTS)</span>
-                        {% if uc.semestre == 1 %}
-                            - 1º Semestre
-                        {% elif uc.semestre == 2 %}
-                            - 2º Semestre
-                        {% endif %}
-                        {% if uc.nature %}
-                            - {{ uc.nature }}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+    <h2>Licenciatura em {{ licenciatura.nome }}</h2>
+
+    <!-- O nosso Menu de Navegação -->
+    <div class="menu-container">
+        <!-- Link para os detalhes do curso (que já tinhas) -->
+        <a class="menu-btn" href="{% url 'curso_detail' %}">Sobre o Curso</a>
+
+        <!-- Link para a nova página de UCs que acabaste de criar -->
+        <a class="menu-btn" href="{% url 'ucs' %}">Unidades Curriculares</a>
+
+        <!-- No futuro, adicionarás mais botões aqui, por exemplo: -->
+        {# <a class="menu-btn" href="{% url 'tecnologias' %}">Tecnologias</a> #}
+        {# <a class="menu-btn" href="{% url 'projetos' %}">Projetos</a> #}
+
+    </div>
+
     {% else %}
-        <p>Nenhum curso encontrado.</p>
+    <p>Nenhum curso encontrado na Base de Dados.</p>
     {% endif %}
 </body>
+
 </html>
