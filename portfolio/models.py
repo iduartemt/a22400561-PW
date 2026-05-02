@@ -211,3 +211,8 @@ class MakingOf(models.Model):
     evidencia = models.CharField(max_length=255, blank=True)
     data = models.DateField()
     tipo_registo = models.CharField(max_length=50)
+    
+    # --- NOVOS CAMPOS PARA CUMPRIR O ENUNCIADO ---
+    commit_hash = models.CharField(max_length=50, blank=True, null=True, help_text="Exemplo: a1b2c3d")
+    sugestoes_implementadas = models.TextField(blank=True, null=True, help_text="Descrever as sugestões feitas e como foram alteradas")
+    quantidade_iteracoes = models.IntegerField(blank=True, null=True, help_text="Quantidade de iterações/commits reportados neste registo")

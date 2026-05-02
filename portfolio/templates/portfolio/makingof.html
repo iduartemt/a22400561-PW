@@ -31,7 +31,22 @@
                 <strong>Data:</strong> {{ registo.data }} | 
                 <strong>Tipo:</strong> {{ registo.tipo_registo }} | 
                 <strong>Entidade Afetada:</strong> {{ registo.entidade }}
+                
+                {% if registo.commit_hash %}
+                    | <strong>Commit (Hash):</strong> {{ registo.commit_hash }}
+                {% endif %}
+                
+                {% if registo.quantidade_iteracoes %}
+                    | <strong>Nº Iterações:</strong> {{ registo.quantidade_iteracoes }}
+                {% endif %}
             </div>
+            
+            {% if registo.sugestoes_implementadas %}
+                <div class="seccao">
+                    <h4>💡 Sugestões Implementadas</h4>
+                    <p>{{ registo.sugestoes_implementadas|linebreaks }}</p>
+                </div>
+            {% endif %}
             
             {% if registo.descricao_processo %}
                 <div class="seccao">
