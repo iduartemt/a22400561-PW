@@ -12,4 +12,5 @@ urlpatterns = [
     path('tecnologias/', views.tecnologias_view, name='tecnologias'),
     path('tfcs/', views.tfcs_view, name='tfcs'),
     path('docentes/', views.docentes_view, name='docentes'),
+    path('alunos/', views.alunos_view, name='alunos'),
 ]

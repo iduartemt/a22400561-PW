@@ -1,7 +1,7 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
 from django.shortcuts import render, get_object_or_404
-from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente
+from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno
 
 def home(request):
     # Página inicial passa a ser apenas um menu global, já não precisa de carregar a licenciatura
@@ -83,3 +83,9 @@ def docentes_view(request):
     docentes = Docente.objects.all().order_by('nome')
     context = {'docentes': docentes}
     return render(request, 'portfolio/docentes.html', context)
+
+def alunos_view(request):
+    # Vai buscar todos os alunos, ordenados alfabeticamente
+    alunos = Aluno.objects.all().order_by('nome')
+    context = {'alunos': alunos}
+    return render(request, 'portfolio/alunos.html', context)
