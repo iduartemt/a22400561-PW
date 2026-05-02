@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Trabalhos Finais de Curso</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .tfc-card { background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #ffc107; }
+        .destaque { border-color: #dc3545; background-color: #fff8f8; } /* Estilo especial se for destaque */
+        .info { color: #666; font-size: 0.9em; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>Trabalhos Finais de Curso (TFCs)</h1>
+
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for tfc in tfcs %}
+        <div class="tfc-card {% if tfc.destaque %}destaque{% endif %}">
+            <h3>{{ tfc.titulo }} 
+                {% if tfc.destaque %}
+                    <span style="color: #dc3545; font-size: 0.7em;">(★ Destaque)</span>
+                {% endif %}
+            </h3>
+            
+            <p class="info">
+                <strong>Ano:</strong> {{ tfc.ano }} | 
+                <strong>Autor:</strong> {{ tfc.autor }}
+                {% if tfc.orientador %}
+                    | <strong>Orientador:</strong> {{ tfc.orientador.nome }}
+                {% endif %}
+            </p>
+            
+            {% if tfc.resumo %}
+                <p><strong>Resumo:</strong> {{ tfc.resumo }}</p>
+            {% endif %}
+            
+            {% if tfc.palavras_chave %}
+                <p class="info"><em>Palavras-chave:</em> {{ tfc.palavras_chave }}</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Ainda não há TFCs registados.</p>
+    {% endfor %}
+
+</body>
+</html>

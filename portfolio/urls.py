@@ -10,4 +10,6 @@ urlpatterns = [
     path('ucs/', views.ucs_view, name='ucs'),
     path('projetos/', views.projetos_view, name='projetos'),
     path('tecnologias/', views.tecnologias_view, name='tecnologias'),
+    path('tfcs/', views.tfcs_view, name='tfcs'),
+    path('docentes/', views.docentes_view, name='docentes'),
 ]
