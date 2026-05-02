@@ -36,26 +36,20 @@
 <body>
     <h1>Menu Principal - Portfolio</h1>
 
-    {% if licenciatura %}
-    <h2>Licenciatura em {{ licenciatura.nome }}</h2>
-
-    <!-- O nosso Menu de Navegação -->
+    <!-- O nosso Menu de Navegação Global -->
     <div class="menu-container">
-        <!-- Link para os detalhes do curso (que já tinhas) -->
-        <a class="menu-btn" href="{% url 'curso_detail' %}">Sobre o Curso</a>
+        <!-- Nova página de Listagem de Cursos -->
+        <a class="menu-btn" href="{% url 'cursos' %}">Formações Académicas</a>
 
-        <!-- Link para a nova página de UCs que acabaste de criar -->
+        <!-- Link para a página de UCs -->
         <a class="menu-btn" href="{% url 'ucs' %}">Unidades Curriculares</a>
 
-        <!-- No futuro, adicionarás mais botões aqui, por exemplo: -->
-        {# <a class="menu-btn" href="{% url 'tecnologias' %}">Tecnologias</a> #}
-        {# <a class="menu-btn" href="{% url 'projetos' %}">Projetos</a> #}
+        <!-- Link para a página de Projetos que já ativaste -->
+        <a class="menu-btn" href="{% url 'projetos' %}">Projetos</a>
 
+        <!-- Link ativado para as tecnologias -->
+        <a class="menu-btn" href="{% url 'tecnologias' %}">Tecnologias</a>
     </div>
-
-    {% else %}
-    <p>Nenhum curso encontrado na Base de Dados.</p>
-    {% endif %}
 </body>
 
 </html>

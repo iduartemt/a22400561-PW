@@ -1,21 +1,24 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
 from django.shortcuts import render, get_object_or_404
-from .models import Licenciatura, UnidadeCurricular
+from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia
 
-# Página inicial: lista o curso e organiza as UCs por ano.
 def home(request):
-    licenciatura = Licenciatura.objects.first()
-    
-    context = {
-        'licenciatura': licenciatura,
-    }
-    return render(request, 'portfolio/home.html', context)
+    # Página inicial passa a ser apenas um menu global, já não precisa de carregar a licenciatura
+    return render(request, 'portfolio/home.html')
 
-# Página de detalhe do curso: mostra informação geral do curso.
-def curso_detail(request):
-    licenciatura = Licenciatura.objects.first()
-    
+# Página com a lista de todos os cursos
+def cursos_view(request):
+    cursos = Licenciatura.objects.all()
+    context = {
+        'cursos': cursos,
+    }
+    return render(request, 'portfolio/cursos.html', context)
+
+# Página de detalhe de um curso específico: precisa do ID
+def curso_detail(request, curso_id):
+    licenciatura = get_object_or_404(Licenciatura, pk=curso_id)
+
     context = {
         'licenciatura': licenciatura,
     }
@@ -44,3 +47,27 @@ def ucs_view(request):
     # Mandamos os dados para um novo ficheiro chamado ucs.html
     return render(request, 'portfolio/ucs.html', context)
 
+def projetos_view(request):
+    # Busca todos os projetos ordenados por ano e depois por UC
+    projetos_ordenados = Projeto.objects.all()
+    
+    # Agrupa por UC para manter a estrutura do template (se preferires)
+    # Se preferires uma lista simples, apenas passas 'projetos_ordenados'
+    projetos_por_uc = {}
+    for projeto in projetos_ordenados:
+        uc_nome = projeto.unidade_curricular.nome
+        if uc_nome not in projetos_por_uc:
+            projetos_por_uc[uc_nome] = []
+        projetos_por_uc[uc_nome].append(projeto)
+
+    context = {
+        'projetos_por_uc': projetos_por_uc,
+        # 'projetos_ordenados': projetos_ordenados # Alternativa: usar lista simples
+    }
+    return render(request, 'portfolio/projetos.html', context)
+
+def tecnologias_view(request):
+    # Vai buscar todas as tecnologias, ordenadas por nome (alfabeticamente)
+    tecnologias = Tecnologia.objects.all().order_by('nome')
+    context = {'tecnologias': tecnologias}
+    return render(request, 'portfolio/tecnologias.html', context)

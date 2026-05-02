@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Cursos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .curso { background-color: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #007bff; }
+        a { text-decoration: none; color: #007bff; font-weight: bold; font-size: 18px; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>As minhas Formações</h1>
+    
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for curso in cursos %}
+        <div class="curso">
+            <!-- Ao clicar, passamos o ID do curso para a view 'curso_detail' -->
+            <a href="{% url 'curso_detail' curso.id %}">{{ curso.nome }}</a>
+            <p>Duração: {{ curso.duracao_anos }} anos</p>
+        </div>
+    {% empty %}
+        <p>Não há cursos registados na base de dados.</p>
+    {% endfor %}
+</body>
+</html>

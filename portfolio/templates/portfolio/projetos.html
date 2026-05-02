@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Projetos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .uc-grupo {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Meus Projetos</h1>
+
+    <!-- O link de voltar tem de ficar FORA do ciclo for! -->
+    <p><a href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for uc_nome, projetos_da_uc in projetos_por_uc.items %}
+    <div class="uc-grupo">
+        <h3>{{ uc_nome }}</h3>
+
+        <ul>
+            {% for projeto in projetos_da_uc %}
+            <li>
+                <strong>{{ projeto.titulo }}</strong> ({{ projeto.ano }})
+                <br>
+                <p>{{ projeto.descricao }}</p>
+                <p><em>Conceitos:</em> {{ projeto.conceitos_aplicados }}</p>
+
+                {% if projeto.github_url %}
+                <a href="{{ projeto.github_url }}" target="_blank">Ver no GitHub</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% empty %}
+    <p>Ainda não tens projetos registados.</p>
+    {% endfor %}
+
+</body>
+
+</html>
