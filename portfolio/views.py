@@ -1,7 +1,7 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
 from django.shortcuts import render, get_object_or_404
-from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno
+from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno, Competencia, Formacao, MakingOf
 
 def home(request):
     # Página inicial passa a ser apenas um menu global, já não precisa de carregar a licenciatura
@@ -89,3 +89,29 @@ def alunos_view(request):
     alunos = Aluno.objects.all().order_by('nome')
     context = {'alunos': alunos}
     return render(request, 'portfolio/alunos.html', context)
+
+def competencias_view(request):
+    # Agrupar as competências pelo tipo facilita a visualização
+    competencias_ordenadas = Competencia.objects.all().prefetch_related('tecnologias').order_by('tipo', '-nivel', 'nome')
+    
+    competencias_por_tipo = {}
+    for comp in competencias_ordenadas:
+        tipo = comp.tipo
+        if tipo not in competencias_por_tipo:
+            competencias_por_tipo[tipo] = []
+        competencias_por_tipo[tipo].append(comp)
+
+    context = {'competencias_por_tipo': competencias_por_tipo}
+    return render(request, 'portfolio/competencias.html', context)
+
+def formacoes_view(request):
+    # Vai buscar todas as formacoes, ordenadas da mais recente para a mais antiga
+    formacoes = Formacao.objects.all().prefetch_related('competencias').order_by('-data_inicio')
+    context = {'formacoes': formacoes}
+    return render(request, 'portfolio/formacoes.html', context)
+
+def makingof_view(request):
+    # Vai buscar todos os registos do Making Of, do mais recente para o mais antigo
+    registos = MakingOf.objects.all().order_by('-data')
+    context = {'registos': registos}
+    return render(request, 'portfolio/makingof.html', context)

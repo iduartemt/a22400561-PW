@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Making Of</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .makingof-card { background-color: #f9f9f9; padding: 20px; margin-bottom: 25px; border-radius: 8px; border-left: 5px solid #343a40; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .meta-info { font-size: 0.9em; color: #666; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .seccao { margin-top: 15px; }
+        .seccao h4 { margin-bottom: 5px; color: #343a40; }
+        .seccao p { margin-top: 0; font-size: 0.95em; line-height: 1.5; }
+        .img-container { margin-top: 15px; }
+        .img-container img { max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 4px; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>Making Of / Diário de Bordo</h1>
+
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for registo in registos %}
+        <div class="makingof-card">
+            <h3>{{ registo.titulo }}</h3>
+            
+            <div class="meta-info">
+                <strong>Data:</strong> {{ registo.data }} | 
+                <strong>Tipo:</strong> {{ registo.tipo_registo }} | 
+                <strong>Entidade Afetada:</strong> {{ registo.entidade }}
+            </div>
+            
+            {% if registo.descricao_processo %}
+                <div class="seccao">
+                    <h4>📝 Descrição do Processo</h4>
+                    <p>{{ registo.descricao_processo|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if registo.decisoes_tomadas %}
+                <div class="seccao">
+                    <h4>🧠 Decisões Tomadas</h4>
+                    <p>{{ registo.decisoes_tomadas|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if registo.justificacao_modelacao %}
+                <div class="seccao">
+                    <h4>🏗️ Justificação da Modelação</h4>
+                    <p>{{ registo.justificacao_modelacao|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if registo.erros_correcao %}
+                <div class="seccao">
+                    <h4>🐛 Erros e Correções</h4>
+                    <p>{{ registo.erros_correcao|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if registo.uso_ia %}
+                <div class="seccao">
+                    <h4>🤖 Uso de Inteligência Artificial</h4>
+                    <p>{{ registo.uso_ia|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if registo.evidencia %}
+                <div class="seccao">
+                    <h4>📎 Evidência Adicional (Caminho/Link)</h4>
+                    <p>{{ registo.evidencia }}</p>
+                </div>
+            {% endif %}
+
+            {% if registo.imagem %}
+                <div class="img-container">
+                    <h4>📷 Imagem / Screenshot</h4>
+                    <img src="{{ registo.imagem.url }}" alt="Evidência do Making Of">
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Ainda não há registos do Making Of.</p>
+    {% endfor %}
+
+</body>
+</html>

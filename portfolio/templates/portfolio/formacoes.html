@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Formações</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .formacao-card { background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #fd7e14; }
+        .datas { font-style: italic; color: #666; font-size: 0.9em; margin: 5px 0; }
+        .instituicao { font-weight: bold; color: #333; margin: 5px 0; }
+        .comp-list { font-size: 0.85em; color: #555; margin-top: 15px; padding-top: 10px; border-top: 1px dashed #ccc; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>Minhas Formações</h1>
+
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for formacao in formacoes %}
+        <div class="formacao-card">
+            <h3>{{ formacao.titulo }}</h3>
+            <p class="instituicao">🏫 {{ formacao.instituicao }}</p>
+            <p class="datas">📅 De {{ formacao.data_inicio }} até {{ formacao.data_fim }}</p>
+            
+            {% if formacao.licenciatura %}
+                <p style="font-size: 0.9em; margin-top: 10px;"><strong>Curso base:</strong> {{ formacao.licenciatura.nome }}</p>
+            {% endif %}
+
+            {% if formacao.competencias.all %}
+                <div class="comp-list">
+                    <strong>Competências Adquiridas:</strong>
+                    <ul>
+                        {% for comp in formacao.competencias.all %}
+                            <li>{{ comp.nome }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Ainda não há Formações registadas.</p>
+    {% endfor %}
+
+</body>
+</html>

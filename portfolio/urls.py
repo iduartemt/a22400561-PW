@@ -13,4 +13,7 @@ urlpatterns = [
     path('tfcs/', views.tfcs_view, name='tfcs'),
     path('docentes/', views.docentes_view, name='docentes'),
     path('alunos/', views.alunos_view, name='alunos'),
+    path('competencias/', views.competencias_view, name='competencias'),
+    path('formacoes/', views.formacoes_view, name='formacoes'),
+    path('makingof/', views.makingof_view, name='makingof'),
 ]
