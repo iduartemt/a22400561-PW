@@ -39,10 +39,14 @@
 </head>
 
 <body>
-    <h1>Plano Curricular</h1>
+    <h1>Plano Curricular{% if curso %} - {{ curso.nome }}{% endif %}</h1>
 
     <!-- Link para voltar atrás -->
-    <p><a href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+    {% if curso %}
+        <p><a href="{% url 'curso_detail' curso.id %}">⬅ Voltar aos Detalhes do Curso</a></p>
+    {% else %}
+        <p><a href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+    {% endif %}
 
     <!-- Aqui está o teu código antigo que lista as UCs agrupadas -->
     {% for ano, ucs in ucs_por_ano.items %}

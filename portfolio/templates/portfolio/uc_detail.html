@@ -69,6 +69,6 @@
     </div>
     {% endif %}
     
-    <p><a href="{% url 'home' %}">← Voltar ao plano curricular</a></p>
+    <p><a href="{% url 'curso_ucs' uc.licenciatura.id %}">← Voltar ao plano curricular de {{ uc.licenciatura.nome }}</a></p>
 </body>
 </html>

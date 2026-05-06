@@ -25,6 +25,10 @@
         {% endfor %}
     {% endif %}
     
-    <p><a href="{% url 'home' %}">← Voltar ao plano curricular</a></p>
+    <div style="margin: 20px 0;">
+        <a href="{% url 'curso_ucs' licenciatura.id %}" style="display: inline-block; background-color: #28a745; color: white; padding: 10px 15px; border-radius: 4px; font-weight: bold; text-decoration: none;">Ver Unidades Curriculares</a>
+    </div>
+    
+    <p><a href="{% url 'cursos' %}">← Voltar à lista de cursos</a></p>
 </body>
 </html>

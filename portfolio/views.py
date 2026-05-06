@@ -31,7 +31,6 @@ def uc_detail(request, uc_id):
     }
     return render(request, 'portfolio/uc_detail.html', context)
 
-## Adiciona esta nova função para as UCs
 def ucs_view(request):
     #buscar a lógica de agrupar por anos que tinhas na home
     ucs_por_ano = {}
@@ -46,6 +45,22 @@ def ucs_view(request):
     }
     # Mandamos os dados para um novo ficheiro chamado ucs.html
     return render(request, 'portfolio/ucs.html', context)
+
+def curso_ucs_view(request, curso_id):
+    curso = get_object_or_404(Licenciatura, pk=curso_id)
+    ucs_por_ano = {}
+    for uc in curso.ucs.all().order_by('ano', 'semestre', 'nome'):
+        ano = uc.ano
+        if ano not in ucs_por_ano:
+            ucs_por_ano[ano] = []
+        ucs_por_ano[ano].append(uc)
+    
+    context = {
+        'curso': curso,
+        'ucs_por_ano': ucs_por_ano,
+    }
+    return render(request, 'portfolio/ucs.html', context)
+
 
 def projetos_view(request):
     # Busca todos os projetos ordenados por ano e depois por UC

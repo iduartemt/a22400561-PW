@@ -22,6 +22,7 @@
             <!-- Ao clicar, passamos o ID do curso para a view 'curso_detail' -->
             <a href="{% url 'curso_detail' curso.id %}">{{ curso.nome }}</a>
             <p>Duração: {{ curso.duracao_anos }} anos</p>
+            <p><a href="{% url 'curso_ucs' curso.id %}" style="display: inline-block; background-color: #28a745; color: white; padding: 8px 12px; border-radius: 4px; font-size: 14px; font-weight: normal; margin-top: 5px;">Ver Unidades Curriculares</a></p>
         </div>
     {% empty %}
         <p>Não há cursos registados na base de dados.</p>
