@@ -58,6 +58,11 @@
             <span class="ects">({{ uc.ects }} ECTS)</span>
             {% if uc.semestre == 1 %} - 1º Semestre {% elif uc.semestre == 2 %} - 2º Semestre {% endif %}
             {% if uc.nature %} - {{ uc.nature }} {% endif %}
+            {% if uc.docentes.all %}
+                <span style="color: #666; font-size: 0.85em; font-style: italic;">
+                    - Docente(s): {% for doc in uc.docentes.all %}{{ doc.nome }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </span>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

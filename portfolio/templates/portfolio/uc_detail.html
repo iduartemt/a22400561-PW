@@ -27,6 +27,23 @@
         {% if uc.organic_unit %}<p><strong>Unidade Orgânica:</strong> {{ uc.organic_unit }}</p>{% endif %}
     </div>
     
+    <div class="section">
+        <h3>Docentes</h3>
+        {% if uc.docentes.all %}
+            <ul style="padding-left: 20px; line-height: 1.6;">
+                {% for docente in uc.docentes.all %}
+                    <li>
+                        <strong>{{ docente.nome }}</strong>
+                        {% if docente.degree %}<span style="color: #666;"> ({{ docente.degree }})</span>{% endif %}
+                        {% if docente.email %} - 📧 <a href="mailto:{{ docente.email }}">{{ docente.email }}</a>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum docente associado a esta unidade curricular.</p>
+        {% endif %}
+    </div>
+    
     {% if uc.objectives %}
     <div class="section">
         <h3>Objetivos</h3>
