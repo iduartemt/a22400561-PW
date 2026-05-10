@@ -166,28 +166,33 @@
         .tech-group {
             margin-bottom: 25px;
         }
+
         .tech-group h3 {
             border-bottom: 1px dashed var(--primary);
             padding-bottom: 5px;
             color: var(--accent);
         }
+
         .tech-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 15px;
         }
+
         .tech-card {
             background: white;
             border: 1px solid #eaeaea;
             padding: 15px;
             border-radius: 8px;
             transition: transform 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
         }
+
         .tech-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
+
         .tech-card h4 {
             margin-top: 0;
             margin-bottom: 10px;
@@ -195,12 +200,46 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .tech-badge {
             font-size: 0.7em;
             background: #e9ecef;
             padding: 3px 8px;
             border-radius: 12px;
             color: #495057;
+        }
+
+        /* Markdown embedded styles */
+        .markdown-content h2 {
+            border-bottom: 1px solid #eee;
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-top: 30px;
+        }
+
+        .markdown-content h3 {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            padding-left: 20px;
+        }
+
+        .markdown-content code {
+            background: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid #ccc;
+            margin: 0;
+            padding-left: 15px;
+            color: #666;
+            font-style: italic;
         }
     </style>
 </head>
@@ -253,7 +292,8 @@
             <p>O fluxo começa quando o <strong>Utilizador</strong> faz um pedido no Browser. O Django consulta o
                 <strong>URL</strong> para direcionar o pedido para a <strong>View</strong> correta. A View comunica com
                 o <strong>Model</strong> para buscar/gravar dados, envia-os para o <strong>Template</strong> preencher o
-                HTML dinâmico e, finalmente, devolve a resposta HTTP ao Browser do utilizador.</p>
+                HTML dinâmico e, finalmente, devolve a resposta HTTP ao Browser do utilizador.
+            </p>
         </div>
 
         <!-- 2. VÍDEO TUTORIAL -->
@@ -262,14 +302,9 @@
             <p>Vídeo explicativo da criação e funcionamento do formulário para adicionar novos projetos ao portfolio.
             </p>
 
-            <div class="placeholder-alert">
-                <strong>Nota:</strong> Substitui o código do iframe abaixo pelo teu link de partilha definitivo quando
-                carregares o vídeo!
-            </div>
-
             <div class="video-container">
                 <!-- Substituir o 'src' pelo link 'embed' do teu vídeo -->
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo Tutorial"
+                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/aLabAb7BSX8" title="Vídeo Tutorial"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
             </div>
@@ -278,30 +313,34 @@
         <!-- 3. TECNOLOGIAS -->
         <div class="section-card">
             <h2>3. Stack Tecnológica da Aplicação</h2>
-            <p>Esta secção lista as tecnologias utilizadas especificamente na construção deste Portfolio, agrupadas por categoria.</p>
-            
+            <p>Esta secção lista as tecnologias utilizadas especificamente na construção deste Portfolio, agrupadas por
+                categoria.</p>
+
             {% if techs_por_tipo %}
-                {% for tipo, lista_techs in techs_por_tipo.items %}
-                    <div class="tech-group">
-                        <h3>📁 {{ tipo }}</h3>
-                        <div class="tech-grid">
-                            {% for tech in lista_techs %}
-                                <div class="tech-card">
-                                    <h4>
-                                        {{ tech.nome }}
-                                        <span class="tech-badge">Ativo</span>
-                                    </h4>
-                                    <p style="font-size: 0.95em; color: #555;">{{ tech.descricao }}</p>
-                                    {% if tech.website_oficial %}
-                                        <a href="{{ tech.website_oficial }}" target="_blank" style="font-size: 0.8em; color: var(--accent); text-decoration: none; font-weight: bold;">Website Oficial &rarr;</a>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
+            {% for tipo, lista_techs in techs_por_tipo.items %}
+            <div class="tech-group">
+                <h3>📁 {{ tipo }}</h3>
+                <div class="tech-grid">
+                    {% for tech in lista_techs %}
+                    <div class="tech-card">
+                        <h4>
+                            {{ tech.nome }}
+                            <span class="tech-badge">Ativo</span>
+                        </h4>
+                        <p style="font-size: 0.95em; color: #555;">{{ tech.descricao }}</p>
+                        {% if tech.website_oficial %}
+                        <a href="{{ tech.website_oficial }}" target="_blank"
+                            style="font-size: 0.8em; color: var(--accent); text-decoration: none; font-weight: bold;">Website
+                            Oficial &rarr;</a>
+                        {% endif %}
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
             {% else %}
-                <p><em>Não foram encontradas tecnologias associadas ao projeto "Portfolio de Programação Web". Por favor garante que crias e associas as tecnologias ao projeto via Painel Admin.</em></p>
+            <p><em>Não foram encontradas tecnologias associadas ao projeto "Portfolio de Programação Web". Por favor
+                    garante que crias e associas as tecnologias ao projeto via Painel Admin.</em></p>
             {% endif %}
         </div>
 
@@ -314,23 +353,6 @@
                 <img src="/media/makingof/Relacoes.jpeg" alt="Diagrama Entidade-Relação Manual">
             </div>
 
-            <h3>Diagrama Digital (Visualização Gerada)</h3>
-            <p>Segue uma representação interativa das tabelas e relações implementadas no sistema:</p>
-            <div class="mermaid">
-                erDiagram
-                Licenciatura ||--o{ UnidadeCurricular : "tem"
-                Licenciatura ||--o{ Formacao : "tem"
-                UnidadeCurricular }o--o{ Docente : "lecionam"
-                UnidadeCurricular ||--o{ Projeto : "pertence_a"
-                Projeto }o--o{ Tecnologia : "usa"
-                Projeto }o--o{ Competencia : "demonstra"
-                Competencia }o--o{ Tecnologia : "associada"
-                Formacao }o--o{ Competencia : "desenvolve"
-                TFC }o--|| Docente : "orientado_por"
-                TFC }o--o{ Tecnologia : "usa"
-                TFC }o--o{ Aluno : "feito_por"
-                TFC }o--o{ Competencia : "demonstra"
-            </div>
         </div>
 
         <!-- 5. CÓDIGO DOS MODELOS -->
@@ -338,6 +360,58 @@
             <h2>5. Modelação Programática (models.py)</h2>
             <p>Abaixo podes consultar a definição real das tabelas no ficheiro de código Python:</p>
             <pre><code>{{ models_code }}</code></pre>
+        </div>
+
+        <!-- 6. ESTRUTURA DE NAVEGAÇÃO -->
+        <div class="section-card">
+            <h2>6. Estrutura de Navegação da Aplicação</h2>
+            <p>Mapa visual de como as páginas estão interligadas através das rotas e menus:</p>
+            <div class="img-box">
+                <img src="/media/navegacao_aplicacao.jpeg" alt="Estrutura de Navegação da Aplicação">
+            </div>
+        </div>
+
+        <!-- 7. GITHUB -->
+        <div class="section-card">
+            <h2>7. Repositório GitHub</h2>
+            <p>O código-fonte deste projeto encontra-se alojado no GitHub, garantindo versionamento e integridade do
+                código.</p>
+            <div class="placeholder-alert" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724;">
+                <strong>🔗 Link para Repositório:</strong>
+                <a href="https://github.com/" target="_blank">Visitar o Repositório no GitHub</a> (Atualiza o link em
+                sobre.html)
+            </div>
+
+            <h3>Vantagens do uso de Git/GitHub</h3>
+            <div class="grid-info">
+                <div class="info-item" style="border-left-color: #24292e;">
+                    <h3>Controle de Versões</h3>
+                    <p>Permite gravar estados (commits), voltar atrás em caso de erro e ramificar experiências sem
+                        estragar o código principal.</p>
+                </div>
+                <div class="info-item" style="border-left-color: #24292e;">
+                    <h3>Cópia de Segurança & Cloud</h3>
+                    <p>Garante que o código não se perde em caso de falha local, facilitando a partilha segura e backup
+                        centralizado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. MAKING-OF -->
+        <div class="section-card">
+            <h2>8. Resumo de Desenvolvimento (Making-Of)</h2>
+            <p>Em baixo encontra-se o registo em tempo real do progresso e dificuldades sentidas ao longo das semanas
+                (carregado dinamicamente do ficheiro markdown do projeto):</p>
+            <div class="markdown-content"
+                style="background: #fafafa; padding: 25px; border: 1px solid #eaeaea; border-radius: 8px;">
+                {{ making_of_html|safe }}
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <a href="{% url 'makingof' %}"
+                    style="background: var(--primary); color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Abrir
+                    Making Ofs&rarr;</a>
+            </div>
         </div>
 
     </div>
