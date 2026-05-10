@@ -34,6 +34,9 @@
 
     <!-- O link de voltar tem de ficar FORA do ciclo for! -->
     <p><a href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+    <p><a href="{% url 'novo_projeto' %}" style="background: #28a745; color: white; padding: 8px; border-radius: 4px;">➕
+            Adicionar Novo Projeto</a></p>
+
 
     {% for uc_nome, projetos_da_uc in projetos_por_uc.items %}
     <div class="uc-grupo">
@@ -50,6 +53,9 @@
                 {% if projeto.github_url %}
                 <a href="{{ projeto.github_url }}" target="_blank">Ver no GitHub</a>
                 {% endif %}
+                <a href="{% url 'edita_projeto' projeto.id %}" style="color: orange;">📝 Editar</a> |
+                <a href="{% url 'apaga_projeto' projeto.id %}" style="color: red;">🗑️ Apagar</a>
+
             </li>
             {% endfor %}
         </ul>

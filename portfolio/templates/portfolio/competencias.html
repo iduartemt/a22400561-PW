@@ -19,6 +19,7 @@
     <h1>Minhas Competências</h1>
 
     <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+    <p><a href="{% url 'nova_competencia' %}" style="background: #28a745; color: white; padding: 8px; border-radius: 4px;">➕ Adicionar Nova Competência</a></p>
 
     {% for tipo, competencias in competencias_por_tipo.items %}
         <div class="tipo-seccao">
@@ -35,6 +36,10 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+                    <p style="margin-top: 10px;">
+                        <a href="{% url 'edita_competencia' comp.id %}" style="color: orange;">📝 Editar</a> | 
+                        <a href="{% url 'apaga_competencia' comp.id %}" style="color: red;">🗑️ Apagar</a>
+                    </p>
                 </div>
             {% endfor %}
         </div>

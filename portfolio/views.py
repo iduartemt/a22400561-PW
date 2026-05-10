@@ -1,7 +1,9 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno, Competencia, Formacao, MakingOf
+from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
+
 
 def home(request):
     # Página inicial passa a ser apenas um menu global, já não precisa de carregar a licenciatura
@@ -130,3 +132,168 @@ def makingof_view(request):
     registos = MakingOf.objects.all().order_by('-data')
     context = {'registos': registos}
     return render(request, 'portfolio/makingof.html', context)
+
+
+def novo_projeto_view(request):
+    if request.method == 'POST':
+        form = ProjetoForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('projetos')
+
+    else:
+        form = ProjetoForm()
+
+    return render(request, 'portfolio/projeto_form.html', {
+        'form': form,
+        'titulo': 'Novo Projeto'
+    })
+
+def edita_projeto_view(request, projeto_id):
+    projeto = get_object_or_404(Projeto, id=projeto_id)
+
+    if request.method == 'POST':
+        form = ProjetoForm(request.POST, request.FILES, instance=projeto)
+
+        if form.is_valid():
+            form.save()
+            return redirect('projetos')
+
+    else:
+        form = ProjetoForm(instance=projeto)
+
+    return render(request, 'portfolio/projeto_form.html', {
+        'form': form,
+        'titulo': 'Editar Projeto'
+    })
+
+
+def apaga_projeto_view(request, projeto_id):
+    projeto = get_object_or_404(Projeto, id=projeto_id)
+
+    if request.method == 'POST':
+        projeto.delete()
+        return redirect('projetos')
+
+    return render(request, 'portfolio/projeto_confirm_delete.html', {
+        'projeto': projeto
+    })
+
+def nova_tecnologia_view(request):
+    if request.method == 'POST':
+        form = TecnologiaForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('tecnologias')
+
+    else:
+        form = TecnologiaForm()
+
+    return render(request, 'portfolio/tecnologia_form.html', {
+        'form': form,
+        'titulo': 'Nova Tecnologia'
+    })
+
+def edita_tecnologia_view(request, tecnologia_id):
+    tecnologia = get_object_or_404(Tecnologia, id=tecnologia_id)
+
+    if request.method == 'POST':
+        form = TecnologiaForm(request.POST, request.FILES, instance=tecnologia)
+
+        if form.is_valid():
+            form.save()
+            return redirect('tecnologias')
+
+    else:
+        form = TecnologiaForm(instance=tecnologia)
+
+    return render(request, 'portfolio/tecnologia_form.html', {
+        'form': form,
+        'titulo': 'Editar Tecnologia'
+    })
+
+
+def apaga_tecnologia_view(request, tecnologia_id):
+    tecnologia = get_object_or_404(Tecnologia, id=tecnologia_id)
+
+    if request.method == 'POST':
+        tecnologia.delete()
+        return redirect('tecnologias')
+
+    return render(request, 'portfolio/tecnologia_confirm_delete.html', {
+        'tecnologia': tecnologia
+    })
+
+def nova_competencia_view(request):
+    if request.method == 'POST':
+        form = CompetenciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('competencias')
+    else:
+        form = CompetenciaForm()
+    return render(request, 'portfolio/competencia_form.html', {
+        'form': form,
+        'titulo': 'Nova Competência'
+    })
+
+def edita_competencia_view(request, competencia_id):
+    competencia = get_object_or_404(Competencia, id=competencia_id)
+    if request.method == 'POST':
+        form = CompetenciaForm(request.POST, request.FILES, instance=competencia)
+        if form.is_valid():
+            form.save()
+            return redirect('competencias')
+    else:
+        form = CompetenciaForm(instance=competencia)
+    return render(request, 'portfolio/competencia_form.html', {
+        'form': form,
+        'titulo': 'Editar Competência'
+    })
+
+def apaga_competencia_view(request, competencia_id):
+    competencia = get_object_or_404(Competencia, id=competencia_id)
+    if request.method == 'POST':
+        competencia.delete()
+        return redirect('competencias')
+    return render(request, 'portfolio/competencia_confirm_delete.html', {
+        'competencia': competencia
+    })
+
+def nova_formacao_view(request):
+    if request.method == 'POST':
+        form = FormacaoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('formacoes')
+    else:
+        form = FormacaoForm()
+    return render(request, 'portfolio/formacao_form.html', {
+        'form': form,
+        'titulo': 'Nova Formação'
+    })
+
+def edita_formacao_view(request, formacao_id):
+    formacao = get_object_or_404(Formacao, id=formacao_id)
+    if request.method == 'POST':
+        form = FormacaoForm(request.POST, request.FILES, instance=formacao)
+        if form.is_valid():
+            form.save()
+            return redirect('formacoes')
+    else:
+        form = FormacaoForm(instance=formacao)
+    return render(request, 'portfolio/formacao_form.html', {
+        'form': form,
+        'titulo': 'Editar Formação'
+    })
+
+def apaga_formacao_view(request, formacao_id):
+    formacao = get_object_or_404(Formacao, id=formacao_id)
+    if request.method == 'POST':
+        formacao.delete()
+        return redirect('formacoes')
+    return render(request, 'portfolio/formacao_confirm_delete.html', {
+        'formacao': formacao
+    })

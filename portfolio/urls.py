@@ -17,4 +17,20 @@ urlpatterns = [
     path('competencias/', views.competencias_view, name='competencias'),
     path('formacoes/', views.formacoes_view, name='formacoes'),
     path('makingof/', views.makingof_view, name='makingof'),
+    #urls de projetos (criar, editar,apagar)
+    path('projeto/novo/', views.novo_projeto_view, name='novo_projeto'),
+    path('projeto/<int:projeto_id>/editar/', views.edita_projeto_view, name='edita_projeto'),
+    path('projeto/<int:projeto_id>/apagar/', views.apaga_projeto_view, name='apaga_projeto'),
+    #urls de tecnologias (criar, editar,apagar)
+    path('tecnologia/novo/', views.nova_tecnologia_view, name='nova_tecnologia'),
+    path('tecnologia/<int:tecnologia_id>/editar/', views.edita_tecnologia_view, name='edita_tecnologia'),
+    path('tecnologia/<int:tecnologia_id>/apagar/', views.apaga_tecnologia_view, name='apaga_tecnologia'),
+    #urls de competencias (criar, editar, apagar)
+    path('competencia/nova/', views.nova_competencia_view, name='nova_competencia'),
+    path('competencia/<int:competencia_id>/editar/', views.edita_competencia_view, name='edita_competencia'),
+    path('competencia/<int:competencia_id>/apagar/', views.apaga_competencia_view, name='apaga_competencia'),
+    #urls de formacoes (criar, editar, apagar)
+    path('formacao/nova/', views.nova_formacao_view, name='nova_formacao'),
+    path('formacao/<int:formacao_id>/editar/', views.edita_formacao_view, name='edita_formacao'),
+    path('formacao/<int:formacao_id>/apagar/', views.apaga_formacao_view, name='apaga_formacao'),
 ]
