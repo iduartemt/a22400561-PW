@@ -2,13 +2,13 @@
 O objetivo desta fase foi modelar e implementar incrementalmente uma aplicação Django para um portfólio académico e profissional, incluindo entidades como Licenciatura, Unidade Curricular, Projetos, Tecnologias, Competências, Formações, TFCs e Making Of.
 
 ## 2. Fotografias do DER e apontamentos
-- DER inicial: `media/makingof/der_v1.jpg`
+- DER inicial: `media/makingof/Relacoes.jpeg`
 - Screenshot admin Licenciatura: `media/makingof/admin_licenciatura.png`
 - Screenshot admin Projeto: `media/makingof/admin_projeto.png`
 - Screenshot commit Docente: `media/makingof/commit_docente_admin.png`
 
 ## 2. Fotografias do DER e apontamentos
-- DER inicial: `media/makingof/der_v1.jpg`
+- DER inicial: `media/makingof/Relacoes.jpeg`
 - Screenshot admin Licenciatura: `media/makingof/admin_licenciatura.png`
 - Screenshot admin Projeto: `media/makingof/admin_projeto.png`
 - Screenshot commit Docente: `media/makingof/commit_docente_admin.png`
@@ -105,4 +105,53 @@ Para garantir que todas as funcionalidades e templates da aplicação pudessem s
 - **Projeto**: Criados 3 projetos (totalizando 3) associados a unidades curriculares, tecnologias e competências.
 - **Aluno**: Verificado que já existiam 3 alunos registados.
 
-Esta etapa permitiu verificar o correto funcionamento das relações ManyToMany e ForeignKey nos templates da aplicação e no Django Admin.
+Esta etapa permitiu verificar o correto funcionamento das relações ManyToMany e ForeignKey nos templates da aplicação e no Django Admin.
+
+## 9. Implementação de Interfaces CRUD Dinâmicas
+**Data:** 10/05/2026
+
+Foi implementada a gestão completa de dados (Create, Read, Update, Delete) para os modelos chave do sistema: Projetos, Tecnologias, Competências e Formações, permitindo a manipulação direta na interface pública.
+
+### Ações Realizadas:
+- **Formulários:** Criação do `forms.py` utilizando o `ModelForm` do Django, que gerou dinamicamente os campos HTML baseados nos campos da BD.
+- **Lógica de Views:** Criação de views que processam o tráfego HTTP (GET para ler o formulário e POST para gravar com `form.save()`).
+- **Interfaces:** Adição de botões visuais de "Adicionar", "Editar" e "Apagar" integrados nos templates de listagem e confirmação de eliminação.
+
+### Dificuldades e Erros Corrigidos:
+- **Desajuste de Nomenclatura:** Ocorreram erros de `AttributeError` e `NoReverseMatch` devido ao facto de ter nomeado funções no plural nas Views enquanto as URLs procuravam o singular. Resolvido uniformizando para singular.
+- **Limpeza de Código:** Identificaram-se variáveis clonadas por "copy-paste" (ex: instanciar ProjetoForm ao editar Tecnologia), o que exigiu revisão criteriosa das queries.
+
+### Considerações Úteis e Vantagens do Django:
+- **Rapidez Absurda:** O facto de o Django gerar automaticamente HTML com os nomes corretos dos inputs e lidar com os relacionamentos N:M poupou horas de desenvolvimento.
+- **Segurança Ativa:** O uso do token `{% csrf_token %}` nativo da framework protege a aplicação contra injeções de dados maliciosas, o que é fundamental em aplicações web profissionais.
+- **Arquitetura:** A separação MVT facilitou replicar a funcionalidade para múltiplos modelos sequencialmente.
+
+## 10. Expansão do Modelo MakingOf
+**Data:** 02/05/2026 (Commit: `2e71603`)
+
+Introduziram-se melhorias no modelo `MakingOf` para permitir uma rastreabilidade técnica superior do desenvolvimento da aplicação.
+
+### Alterações:
+- **Novos Campos:** Adição de `commit_hash` e `quantidade_iteracoes` para quantificar os commits reais da equipa no projeto.
+- **Justificação:** Melhoria da integridade académica do portefólio, garantindo visibilidade transparente do histórico de versionamento.
+
+## 11. Reestruturação da Navegação de UCs
+**Data:** 06/05/2026 (Commit: `ef75b6c`)
+
+Refinamento na apresentação hierárquica do plano curricular.
+
+### Decisões:
+- **Lógica:** Alteração do comportamento de listagem para que as Unidades Curriculares não fossem visualizadas apenas isoladamente, mas sim aninhadas nos detalhes da Licenciatura a que pertencem.
+- **Impacto:** Melhoria drástica da User Experience (UX), simulando fielmente a estrutura real de um plano de estudos universitário.
+
+## 12. Reestruturação e Categorização de Tecnologias
+**Data:** 10/05/2026
+
+Focando na evolução contínua da documentação técnica da aplicação.
+
+### Alterações Realizadas:
+- **Nova Classe `TipoTecnologia`**: Criação de uma tabela independente para gerir tipos (Frontend, Backend, Base de Dados, Outros), permitindo escalabilidade nas categorias.
+- **Relação ForeignKey**: Adicionada ligação em `Tecnologia` para o novo modelo `TipoTecnologia`.
+- **Detalhe Descritivo**: Alargamento concetual do campo `descricao` (com ajuda de meta-informação help_text) para garantir cobertura do "que faz, o que permite e opinião crítica".
+- **Integração na Página Sobre**: Implementada a query de agregação dinâmica que agrupa e exibe o stack tecnológico associado ao projeto atual da plataforma.
+

@@ -33,4 +33,5 @@ urlpatterns = [
     path('formacao/nova/', views.nova_formacao_view, name='nova_formacao'),
     path('formacao/<int:formacao_id>/editar/', views.edita_formacao_view, name='edita_formacao'),
     path('formacao/<int:formacao_id>/apagar/', views.apaga_formacao_view, name='apaga_formacao'),
+    path('sobre/', views.sobre_view, name='sobre'),
 ]

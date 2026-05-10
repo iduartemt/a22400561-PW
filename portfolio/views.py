@@ -1,5 +1,7 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
+import os
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno, Competencia, Formacao, MakingOf
 from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
@@ -296,4 +298,36 @@ def apaga_formacao_view(request, formacao_id):
         return redirect('formacoes')
     return render(request, 'portfolio/formacao_confirm_delete.html', {
         'formacao': formacao
+    })
+
+def sobre_view(request):
+    # Carregar o conteúdo do models.py para mostrar no ecrã dinamicamente
+    models_file_path = os.path.join(settings.BASE_DIR, 'portfolio', 'models.py')
+    try:
+        with open(models_file_path, 'r', encoding='utf-8') as f:
+            models_content = f.read()
+    except Exception:
+        models_content = "Não foi possível carregar o ficheiro models.py"
+
+    # Tentar encontrar o Projeto do Portfolio para carregar as tecnologias
+    from .models import Projeto, Tecnologia
+    
+    portfolio_projeto = Projeto.objects.filter(titulo__icontains="Portfolio").first()
+    techs_por_tipo = {}
+
+    if portfolio_projeto:
+        # Obter todas as tecnologias associadas ao projeto, trazendo também o objeto do tipo associado
+        techs = portfolio_projeto.tecnologias.all().select_related('tipo_categoria')
+        
+        for t in techs:
+            # Se não tiver tipo, coloca na categoria "Outros"
+            tipo_nome = t.tipo_categoria.nome if t.tipo_categoria else "Não Categorizado"
+            if tipo_nome not in techs_por_tipo:
+                techs_por_tipo[tipo_nome] = []
+            techs_por_tipo[tipo_nome].append(t)
+
+    return render(request, 'portfolio/sobre.html', {
+        'models_code': models_content,
+        'techs_por_tipo': techs_por_tipo,
+        'projeto': portfolio_projeto
     })

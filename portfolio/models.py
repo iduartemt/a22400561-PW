@@ -71,11 +71,25 @@ class UnidadeCurricular(models.Model):
     def __str__(self):
         return self.nome
     
+# ----------------------------TIPO TECNOLOGIA----------------------------
+class TipoTecnologia(models.Model):
+    nome = models.CharField(max_length=50) # ex: Frontend, Backend, DB, Storage, Outros
+    
+    def __str__(self):
+        return self.nome
+
 # ----------------------------TECNOLOGIA---------------------------- 
 class Tecnologia(models.Model):
     nome = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50)
-    descricao = models.TextField()
+    tipo = models.CharField(max_length=50) # Charfield original mantido por retrocompatibilidade
+    tipo_categoria = models.ForeignKey(
+        TipoTecnologia,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='tecnologias'
+    )
+    descricao = models.TextField(help_text="Descrição do que faz, o que permite, e aspetos que gostou ou não")
     website_oficial = models.URLField()
 
     def __str__(self):

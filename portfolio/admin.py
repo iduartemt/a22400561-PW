@@ -1,7 +1,7 @@
 # Configuração do painel de administração do Django.
 # Cada modelo registado aqui fica disponível para edição no admin.
 from django.contrib import admin
-from .models import Licenciatura, Docente, UnidadeCurricular, Tecnologia, Competencia, Formacao, Projeto, TFC, Aluno, MakingOf
+from .models import Licenciatura, Docente, UnidadeCurricular, Tecnologia, Competencia, Formacao, Projeto, TFC, Aluno, MakingOf, TipoTecnologia
 
 # Regista o modelo Licenciatura no admin e configura as colunas exibidas.
 @admin.register(Licenciatura)
@@ -21,11 +21,15 @@ class UnidadeCurricularAdmin(admin.ModelAdmin):
     search_fields = ('nome',)
     list_filter = ('ano', 'semestre')
 
+@admin.register(TipoTecnologia)
+class TipoTecnologiaAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
+
 @admin.register(Tecnologia)
 class TecnologiaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'tipo', 'website_oficial')
-    search_fields = ('nome', 'tipo')
-    list_filter = ('tipo',)
+    list_display = ('nome', 'tipo_categoria', 'website_oficial')
+    search_fields = ('nome', 'tipo_categoria__nome')
+    list_filter = ('tipo_categoria',)
 
 @admin.register(Competencia)
 class CompetenciaAdmin(admin.ModelAdmin):
