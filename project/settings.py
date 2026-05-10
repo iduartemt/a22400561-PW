@@ -50,6 +50,11 @@ MARKDOWNIFY = {
         'ul', 'li', 'ol',
         'p',
         'h1', 'h2', 'h3', 'h4',
+        'table', 'thead', 'tbody', 'tr', 'th', 'td'
+      ],
+      "MARKDOWN_EXTENSIONS": [
+        'markdown.extensions.tables',
+        'markdown.extensions.fenced_code',
       ]
    },
 

@@ -154,4 +154,23 @@ Focando na evolução contínua da documentação técnica da aplicação.
 - **Relação ForeignKey**: Adicionada ligação em `Tecnologia` para o novo modelo `TipoTecnologia`.
 - **Detalhe Descritivo**: Alargamento concetual do campo `descricao` (com ajuda de meta-informação help_text) para garantir cobertura do "que faz, o que permite e opinião crítica".
 - **Integração na Página Sobre**: Implementada a query de agregação dinâmica que agrupa e exibe o stack tecnológico associado ao projeto atual da plataforma.
+
+## 13. Histórico de Commits (Versionamento)
+Abaixo encontra-se o extrato real dos commits mais recentes efetuados no repositório para a implementação destas funcionalidades.
+
+| Hash | Data | Mensagem de Commit |
+| :--- | :--- | :--- |
+| `3254e77` | 2026-05-10 | feat: add about page with MVT documentation and project tutorial video |
+| `facfa88` | 2026-05-10 | feat: add 'sobre' page with documentation, MVT architecture diagram, and tech stack details |
+| `23d3c3c` | 2026-05-10 | feat: add documentation page for MVT architecture and project tech stack |
+| `c11ed5b` | 2026-05-10 | feat: implement CRUD operations for projects with corresponding forms and templates |
+| `ef75b6c` | 2026-05-06 | feat: implement templates for curricular units listing and detailed view pages |
+| `0919916` | 2026-05-06 | feat: implement portfolio navigation and views for courses, curriculum units, and academic details |
+| `2e71603` | 2026-05-02 | feat: expand MakingOf model with tracking fields and implement corresponding template view |
+| `614ee4a` | 2026-05-02 | feat: implement URL routing, views, and templates for portfolio sections including competencies, education, and making of |
+| `cad2a60` | 2026-05-02 | feat: implement main dashboard and define routing and views for portfolio sections |
+| `9f63ee4` | 2026-05-02 | feat: implement main menu home page and views for TFCs and Docentes |
+| `317bfef` | 2026-05-02 | feat: add views, URLs, and templates to render portfolio sections for courses, projects, and technologies |
+| `ca8d818` | 2026-05-02 | feat: implement academic curriculum page with grouped course list view |
+| `e2cb9bf` | 2026-05-02 | docs: update making_of documentation with database population test details |
 
