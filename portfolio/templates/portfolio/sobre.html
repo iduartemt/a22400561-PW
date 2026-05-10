@@ -1,3 +1,4 @@
+{% load markdownify %}
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -404,7 +405,7 @@
                 (carregado dinamicamente do ficheiro markdown do projeto):</p>
             <div class="markdown-content"
                 style="background: #fafafa; padding: 25px; border: 1px solid #eaeaea; border-radius: 8px;">
-                {{ making_of_html|safe }}
+                {{ making_of_content|markdownify }}
             </div>
 
             <div style="margin-top: 20px; text-align: center;">

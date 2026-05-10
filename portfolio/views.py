@@ -309,15 +309,13 @@ def sobre_view(request):
     except Exception:
         models_content = "Não foi possível carregar o ficheiro models.py"
 
-    # NOVO: Carregar e parsear o ficheiro markdown de Making Of
-    import markdown
+    # NOVO: Carregar o ficheiro markdown bruto para o template tratar com markdownify
     making_of_md_path = os.path.join(settings.BASE_DIR, 'making_of.md')
     try:
         with open(making_of_md_path, 'r', encoding='utf-8') as f:
-            md_content = f.read()
-            making_of_html = markdown.markdown(md_content, extensions=['extra', 'nl2br', 'sane_lists'])
+            making_of_content = f.read()
     except Exception as e:
-        making_of_html = f"<p>O ficheiro 'making_of.md' não foi encontrado na raiz do projeto. ({e})</p>"
+        making_of_content = f"O ficheiro 'making_of.md' não foi encontrado. ({e})"
 
     # Tentar encontrar o Projeto do Portfolio para carregar as tecnologias
     from .models import Projeto, Tecnologia
@@ -340,5 +338,5 @@ def sobre_view(request):
         'models_code': models_content,
         'techs_por_tipo': techs_por_tipo,
         'projeto': portfolio_projeto,
-        'making_of_html': making_of_html
+        'making_of_content': making_of_content
     })
