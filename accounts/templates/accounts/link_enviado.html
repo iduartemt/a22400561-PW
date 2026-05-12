@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .box {
+            border: 2px dashed #28a745;
+            padding: 20px;
+            background: #f4fff4;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Pedido Concluído!</h2>
+    <div class="box">
+        <p>✅ Um link secreto foi gerado.</p>
+        <p><strong>Modo de Aula:</strong> Para testares de imediato, clica no link gerado abaixo:</p>
+
+        {% if link %}
+        <a href="{{ link }}" style="font-weight: bold; color: blue; word-break: break-all;">Clique aqui para fazer Login
+            Automático</a>
+        {% else %}
+        <p style="color: red;">(Se o utilizador não existir, o link não aparece aqui por segurança)</p>
+        {% endif %}
+    </div>
+    <br><a href="{% url 'home' %}">Voltar ao Início</a>
+</body>
+
+</html>
