@@ -61,11 +61,22 @@
 
         <!-- Link ativado para as Formações -->
         <a class="menu-btn" href="{% url 'formacoes' %}">Formações</a>
-        
+
         <hr style="width: 100%; border: 1px solid #ccc; margin: 10px 0;">
-        
+
+        {% if user.is_authenticated %}
+        <p style="margin: 0; font-weight: bold;">Olá, {{ user.username }}!</p>
+        <a class="menu-btn" style="background-color: #dc3545;" href="{% url 'accounts:logout' %}">Terminar Sessão
+            (Logout)</a>
+        {% else %}
+        <a class="menu-btn" style="background-color: #17a2b8;" href="{% url 'accounts:login' %}">Entrar (Login)</a>
+        <a class="menu-btn" style="background-color: #6c757d;" href="{% url 'accounts:registo' %}">Registar Conta</a>
+        {% endif %}
+
+        <hr style="width: 100%; border: 1px solid #ccc; margin: 10px 0;">
         <!-- Link para o Making Of -->
-        <a class="menu-btn" style="background-color: #343a40;" href="{% url 'makingof' %}">Making Of (Diário de Bordo)</a>
+        <a class="menu-btn" style="background-color: #343a40;" href="{% url 'makingof' %}">Making Of (Diário de
+            Bordo)</a>
 
         <!-- Novo Link para Sobre esta Aplicação -->
         <a class="menu-btn" style="background-color: #28a745;" href="{% url 'sobre' %}">Sobre esta Aplicação</a>

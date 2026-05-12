@@ -5,6 +5,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno, Competencia, Formacao, MakingOf
 from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -135,7 +136,7 @@ def makingof_view(request):
     context = {'registos': registos}
     return render(request, 'portfolio/makingof.html', context)
 
-
+@login_required
 def novo_projeto_view(request):
     if request.method == 'POST':
         form = ProjetoForm(request.POST, request.FILES)
@@ -152,6 +153,7 @@ def novo_projeto_view(request):
         'titulo': 'Novo Projeto'
     })
 
+@login_required
 def edita_projeto_view(request, projeto_id):
     projeto = get_object_or_404(Projeto, id=projeto_id)
 
@@ -170,7 +172,7 @@ def edita_projeto_view(request, projeto_id):
         'titulo': 'Editar Projeto'
     })
 
-
+@login_required
 def apaga_projeto_view(request, projeto_id):
     projeto = get_object_or_404(Projeto, id=projeto_id)
 
