@@ -1,0 +1,16 @@
+django
+Pillow
+python-environ
+django_extensions
+django-allauth
+requests
+PyJWT
+cryptography
+whitenoise
+gunicorn
+django-ninja
+cloudinary
+django-cloudinary-storage
+psycopg2-binary
+dj-database-url
+python-dotenv
