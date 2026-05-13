@@ -58,7 +58,8 @@ def pedir_link_view(request):
                 link_gerado = f'link_relativo'  # Fallback para desenvolvimento local
                 #link_gerado = f"{settings.SITE_BASE_URL.rstrip('/')}{link_relativo}"
             else:
-                link_gerado = request.build_absolute_uri(link_relativo)
+                link_gerado = f'link_relativo'  # Fallback para desenvolvimento local
+                #link_gerado = request.build_absolute_uri(link_relativo)
             # Imprime no terminal para poderes clicar!
             print("\n" + "="*30)
             print(f"LINK MÁGICO PARA O USER '{username}':\n{link_gerado}")
