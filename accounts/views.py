@@ -54,12 +54,10 @@ def pedir_link_view(request):
             
             # Constrói o URL completo (ex: http://127.0.0.1:8000/accounts/login-link/TOKEN)
             link_relativo = reverse('accounts:login_link', kwargs={'token': token})
-            if not settings.DEBUG:
-    # Se estivermos em produção (servidor), forçamos o nosso domínio!
-                link_gerado = f"https://duartemartins-a22400561.pw.deisi.ulusofona.pt{link_relativo}"
+            if settings.SITE_BASE_URL:
+                link_gerado = f"{settings.SITE_BASE_URL.rstrip('/')}{link_relativo}"
             else:
-    # Se estivermos no Codespaces/Local, funciona normalmente
-                link_gerado = request.build_absolute_uri(link_relativo)            
+                link_gerado = request.build_absolute_uri(link_relativo)
             # Imprime no terminal para poderes clicar!
             print("\n" + "="*30)
             print(f"LINK MÁGICO PARA O USER '{username}':\n{link_gerado}")
