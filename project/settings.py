@@ -33,8 +33,6 @@ SECRET_KEY = env("django-insecure-k)8+q+ua6u0ljy=ma47yigv!sf%2(h8mr_ysiu)op^xejz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'https://duartemartins-a22400561.pw.deisi.ulusofona.pt',
