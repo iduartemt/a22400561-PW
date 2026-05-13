@@ -35,6 +35,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'https://duartemartins-a22400561.pw.deisi.ulusofona.pt',
+]
 
 # Application definition
 
