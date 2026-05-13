@@ -28,7 +28,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-k)8+q+ua6u0ljy=ma47yigv!sf%2(h8mr_ysiu)op^xejz7=z_"
+SECRET_KEY = env("django-insecure-k)8+q+ua6u0ljy=ma47yigv!sf%2(h8mr_ysiu)op^xejz7=z_", default="dummy")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -110,13 +110,13 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL")
+    "default": env.db("DATABASE_URL", default="sqlite:///db.sqlite3")
 }
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': env('CLOUDINARY_API_KEY'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default='dummy'),
+    'API_KEY': env('CLOUDINARY_API_KEY', default='dummy'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET', default='dummy'),
 }
 
 
