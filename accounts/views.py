@@ -55,7 +55,8 @@ def pedir_link_view(request):
             # Constrói o URL completo (ex: http://127.0.0.1:8000/accounts/login-link/TOKEN)
             link_relativo = reverse('accounts:login_link', kwargs={'token': token})
             if settings.SITE_BASE_URL:
-                link_gerado = f"{settings.SITE_BASE_URL.rstrip('/')}{link_relativo}"
+                link_gerado = f'link_relativo'  # Fallback para desenvolvimento local
+                #link_gerado = f"{settings.SITE_BASE_URL.rstrip('/')}{link_relativo}"
             else:
                 link_gerado = request.build_absolute_uri(link_relativo)
             # Imprime no terminal para poderes clicar!
