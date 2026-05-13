@@ -1,0 +1,6 @@
+<h2>Tem a certeza que deseja apagar o projeto "{{ projeto.titulo }}"?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Sim, Apagar</button>
+    <a href="{% url 'projetos' %}">Cancelar</a>
+</form>

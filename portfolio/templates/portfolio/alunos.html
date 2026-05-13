@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Alunos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .aluno-card { background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid #28a745; }
+        .info { color: #666; font-size: 0.9em; margin: 5px 0;}
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>Alunos do Curso</h1>
+
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for aluno in alunos %}
+        <div class="aluno-card">
+            <h3>{{ aluno.nome }}</h3>
+            {% if aluno.email %}
+                <p class="info">📧 {{ aluno.email }}</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Ainda não há Alunos registados.</p>
+    {% endfor %}
+
+</body>
+</html>

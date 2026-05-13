@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Portfolio Acadêmico - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        .menu-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .menu-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Menu Principal - Portfolio</h1>
+
+    <!-- O nosso Menu de Navegação Global -->
+    <div class="menu-container">
+        <!-- Nova página de Listagem de Cursos -->
+        <a class="menu-btn" href="{% url 'cursos' %}">Formações Académicas</a>
+
+        <!-- Link para a página de Projetos que já ativaste -->
+        <a class="menu-btn" href="{% url 'projetos' %}">Projetos</a>
+
+        <!-- Link ativado para as tecnologias -->
+        <a class="menu-btn" href="{% url 'tecnologias' %}">Tecnologias</a>
+
+        <!-- Link ativado para os TFCs -->
+        <a class="menu-btn" href="{% url 'tfcs' %}">Trabalhos Finais de Curso (TFCs)</a>
+
+        <!-- Link ativado para os Docentes -->
+        <a class="menu-btn" href="{% url 'docentes' %}">Docentes</a>
+
+        <!-- Link ativado para os Alunos -->
+        <a class="menu-btn" href="{% url 'alunos' %}">Alunos</a>
+
+        <!-- Link ativado para as Competências -->
+        <a class="menu-btn" href="{% url 'competencias' %}">Competências</a>
+
+        <!-- Link ativado para as Formações -->
+        <a class="menu-btn" href="{% url 'formacoes' %}">Formações</a>
+
+        <hr style="width: 100%; border: 1px solid #ccc; margin: 10px 0;">
+
+        {% if user.is_authenticated %}
+        <p style="margin: 0; font-weight: bold;">Olá, {{ user.username }}!</p>
+        <a class="menu-btn" style="background-color: #dc3545;" href="{% url 'accounts:logout' %}">Terminar Sessão
+            (Logout)</a>
+        {% else %}
+        <a class="menu-btn" style="background-color: #17a2b8;" href="{% url 'accounts:login' %}">Entrar (Login)</a>
+        <a class="menu-btn" style="background-color: #6c757d;" href="{% url 'accounts:registo' %}">Registar Conta</a>
+        {% endif %}
+
+        <hr style="width: 100%; border: 1px solid #ccc; margin: 10px 0;">
+        <!-- Link para o Making Of -->
+        <a class="menu-btn" style="background-color: #343a40;" href="{% url 'makingof' %}">Making Of (Diário de
+            Bordo)</a>
+
+        <!-- Novo Link para Sobre esta Aplicação -->
+        <a class="menu-btn" style="background-color: #28a745;" href="{% url 'sobre' %}">Sobre esta Aplicação</a>
+    </div>
+</body>
+
+</html>

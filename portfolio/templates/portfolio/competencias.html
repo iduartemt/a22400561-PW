@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Competências</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .tipo-seccao { margin-bottom: 30px; }
+        .comp-card { background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid #6f42c1; }
+        .nivel { font-weight: bold; color: #dc3545; }
+        .tech-list { font-size: 0.85em; color: #666; margin-top: 5px; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>Minhas Competências</h1>
+
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+    <p><a href="{% url 'nova_competencia' %}" style="background: #28a745; color: white; padding: 8px; border-radius: 4px;">➕ Adicionar Nova Competência</a></p>
+
+    {% for tipo, competencias in competencias_por_tipo.items %}
+        <div class="tipo-seccao">
+            <h2>{{ tipo }}</h2>
+            {% for comp in competencias %}
+                <div class="comp-card">
+                    <h3>{{ comp.nome }} <span class="nivel">(Nível: {{ comp.nivel }})</span></h3>
+                    
+                    {% if comp.tecnologias.all %}
+                        <div class="tech-list">
+                            <strong>Tecnologias relacionadas:</strong> 
+                            {% for tech in comp.tecnologias.all %}
+                                {{ tech.nome }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p style="margin-top: 10px;">
+                        <a href="{% url 'edita_competencia' comp.id %}" style="color: orange;">📝 Editar</a> | 
+                        <a href="{% url 'apaga_competencia' comp.id %}" style="color: red;">🗑️ Apagar</a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p>Ainda não há Competências registadas.</p>
+    {% endfor %}
+
+</body>
+</html>

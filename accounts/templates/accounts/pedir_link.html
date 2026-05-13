@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pedir Link Mágico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .auth-container {
+            max-width: 400px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        input {
+            width: 95%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            background-color: #17a2b8;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Entrar sem Password</h2>
+    <div class="auth-container">
+        <p>Escreve o teu Nome de Utilizador para receberes um link seguro:</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Ex: admin" required>
+            <button type="submit" class="btn">Gerar Link Mágico 🪄</button>
+        </form>
+        <br><a href="{% url 'accounts:login' %}">Voltar ao Login normal</a>
+    </div>
+</body>
+
+</html>

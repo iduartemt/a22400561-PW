@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Docentes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .docente-card { background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #6c757d; }
+        .info { color: #666; font-size: 0.9em; margin: 5px 0;}
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .back-btn { text-decoration: none; color: #555; }
+        .back-btn:hover { text-decoration: underline; color: #000; }
+        .links { margin-top: 10px; font-size: 0.9em; }
+        .links a { margin-right: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Corpo Docente</h1>
+
+    <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
+
+    {% for docente in docentes %}
+        <div class="docente-card">
+            <h3>
+                {{ docente.nome }}
+                {% if docente.degree %}
+                    <span style="font-size: 0.7em; color: #666; font-weight: normal;">({{ docente.degree }})</span>
+                {% endif %}
+            </h3>
+            
+            {% if docente.email %}
+                <p class="info">📧 {{ docente.email }}</p>
+            {% endif %}
+            
+            {% if docente.academic_name and docente.academic_name != docente.nome %}
+                <p class="info"><strong>Nome Académico:</strong> {{ docente.academic_name }}</p>
+            {% endif %}
+            
+            <div class="links">
+                {% if docente.pagina_lusofona %}
+                    <a href="{{ docente.pagina_lusofona }}" target="_blank">Página Lusófona</a>
+                {% endif %}
+                {% if docente.orcid %}
+                    <a href="https://orcid.org/{{ docente.orcid }}" target="_blank">ORCID</a>
+                {% endif %}
+                {% if docente.ciencia_vitae %}
+                    <a href="https://www.cienciavitae.pt/{{ docente.ciencia_vitae }}" target="_blank">Ciência Vitae</a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Ainda não há Docentes registados.</p>
+    {% endfor %}
+
+</body>
+</html>

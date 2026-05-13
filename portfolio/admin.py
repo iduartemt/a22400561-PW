@@ -1,0 +1,74 @@
+# Configuração do painel de administração do Django.
+# Cada modelo registado aqui fica disponível para edição no admin.
+from django.contrib import admin
+from .models import Licenciatura, Docente, UnidadeCurricular, Tecnologia, Competencia, Formacao, Projeto, TFC, Aluno, MakingOf, TipoTecnologia
+
+# Regista o modelo Licenciatura no admin e configura as colunas exibidas.
+@admin.register(Licenciatura)
+class LicenciaturaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'sigla', 'duracao_anos')
+    search_fields = ('nome', 'sigla', 'descricao')
+    list_filter = ('duracao_anos',)
+
+@admin.register(Docente)
+class DocenteAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'email', 'pagina_lusofona')
+    search_fields = ('nome', 'email')
+
+@admin.register(UnidadeCurricular)
+class UnidadeCurricularAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'ano', 'semestre', 'ects', 'licenciatura')
+    search_fields = ('nome',)
+    list_filter = ('ano', 'semestre')
+
+@admin.register(TipoTecnologia)
+class TipoTecnologiaAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
+
+@admin.register(Tecnologia)
+class TecnologiaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'tipo_categoria', 'website_oficial')
+    search_fields = ('nome', 'tipo_categoria__nome')
+    list_filter = ('tipo_categoria',)
+
+@admin.register(Competencia)
+class CompetenciaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'tipo', 'nivel')
+    search_fields = ('nome', 'tipo')
+    list_filter = ('tipo', 'nivel')
+
+@admin.register(Formacao)
+class FormacaoAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'instituicao', 'data_inicio', 'data_fim')
+    search_fields = ('titulo', 'instituicao')
+    list_filter = ('instituicao',)
+
+@admin.register(Projeto)
+class ProjetoAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'ano', 'unidade_curricular')
+    search_fields = ('titulo', 'descricao')
+    list_filter = ('ano',)
+
+@admin.register(TFC)
+class TFCAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'ano', 'destaque')
+    search_fields = ('titulo', 'orientador')
+    list_filter = ('ano', 'destaque')
+
+@admin.register(Aluno)
+class AlunoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'email')
+    search_fields = ('nome', 'email')
+    list_filter = ('email',)
+
+@admin.register(MakingOf)
+class MakingOfAdmin(admin.ModelAdmin):
+    # Configura a exibição e pesquisa dos registos de making of.
+    list_display = ('titulo', 'tipo_registo', 'data')
+    search_fields = (
+        'titulo',
+        'descricao_processo',
+        'decisoes_tomadas',
+        'justificacao_modelacao'
+    )
+    list_filter = ('tipo_registo', 'data')

@@ -1,0 +1,6 @@
+<h2>Tem a certeza que deseja apagar a tecnologia "{{ tecnologia.nome }}"?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Sim, Apagar</button>
+    <a href="{% url 'tecnologias' %}">Cancelar</a>
+</form>
