@@ -177,7 +177,7 @@ class TFC(models.Model):
     curso = models.CharField(max_length=150, blank=True, null=True)
     ano = models.IntegerField(blank=True, null=True)
     resumo = models.TextField(blank=True, null=True)
-    palavras_chave = models.CharField(max_length=250, blank=True, null=True)
+    palavras_chave = models.TextField(blank=True, null=True)
     
     area = models.CharField(max_length=100, blank=True, null=True)
     destaque = models.BooleanField(default=False)
