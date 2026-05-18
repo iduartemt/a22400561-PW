@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegistoForm
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.urls import reverse
 
 # View de Registo
@@ -12,6 +12,11 @@ def registo_view(request):
         form = RegistoForm(request.POST)
         if form.is_valid():
             user = form.save()
+            
+            # Criamos ou procuramos o grupo 'autores' e adicionamos o utilizador a ele
+            grupo_autores, created = Group.objects.get_or_create(name='autores')
+            user.groups.add(grupo_autores)
+            
             login(request, user) # Faz login automático após o registo
             return redirect('home')
     else:

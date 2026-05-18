@@ -158,6 +158,7 @@
             <a href="{% url 'alunos' %}">Alunos</a>
             <a href="{% url 'competencias' %}">Competências</a>
             <a href="{% url 'formacoes' %}">Formações</a>
+            <a href="{% url 'artigos:lista_artigos' %}">Artigos</a>
             <a href="{% url 'sobre' %}">Sobre</a>
             <a href="{% url 'makingof' %}">Making Of</a>
         </div>
@@ -177,17 +178,22 @@
     <section class="hero">
         
         <div class="hero-content">
-            <h1>Ideias que inspiram, constroem e inovam.</h1>
-            <p>
-                Bem-vindo ao meu portfólio académico. Aqui exploro o melhor
-                da criatividade no desenvolvimento web, demonstrando as minhas 
-                competências, projetos desenvolvidos e todo o meu percurso na 
-                Engenharia Informática.
+            
+            <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 20px;">Engenharia Informática & Desenvolvimento Web.</h1>
+            <p style="font-size: 1.25rem; line-height: 1.6; margin-bottom: 30px;">
+                Bem-vindo ao meu espaço digital. Aqui partilho o meu percurso académico, 
+                projetos inovadores e as competências que tenho vindo a desenvolver.
             </p>
+            
+            <div class="social-links" style="margin-top: 30px; font-size: 1.1rem; line-height: 1.8; color: #333;">
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/iduartemt?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" style="color: #0077b5; text-decoration: none; font-weight: 600;">linkedin.com/in/iduartemt</a></p>
+                <p><strong>Discord:</strong> <a href="#" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: 600;">adiciona o teu discord aqui</a></p>
+                <p><strong>Repositório:</strong> <a href="https://github.com/iduartemt/a22400561-PW" target="_blank" style="color: #24292e; text-decoration: none; font-weight: 600;">Repositório do Website no GitHub</a></p>
+            </div>
         </div>
 
         <div class="hero-image">
-            <img src="{% static 'portfolio/images/landing_hero.png' %}" alt="Estudante inspirador">
+            <img src="{% static 'portfolio/images/lol_hero.png' %}" alt="Estudante inspirador" style="max-width: 100%; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
         </div>
 
     </section>

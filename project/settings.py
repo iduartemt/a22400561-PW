@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "accounts",
     'cloudinary',
     'cloudinary_storage',
+    'artigos',
 ]
 
 MARKDOWNIFY = {

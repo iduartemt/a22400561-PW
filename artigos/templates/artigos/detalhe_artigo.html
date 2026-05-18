@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ artigo.titulo }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafbfc;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #e1e4e6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #111;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .meta {
+            font-size: 0.9rem;
+            color: #666;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .author-actions a {
+            margin-left: 10px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #dc3545;
+        }
+        .author-actions a.edit {
+            color: #007bff;
+        }
+        .artigo-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        .artigo-texto {
+            font-size: 1.1rem;
+            color: #222;
+            margin-bottom: 30px;
+            white-space: pre-line; /* Mantém as quebras de linha corretas */
+        }
+        .external-link {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+        .external-link a {
+            color: #007bff;
+            font-weight: 600;
+        }
+        /* Likes */
+        .like-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 0;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+            margin-bottom: 30px;
+        }
+        .btn-like {
+            background-color: #e2e6ea;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .btn-like.active {
+            background-color: #28a745;
+            color: white;
+        }
+        /* Comments */
+        .comments-section {
+            margin-top: 40px;
+        }
+        .comments-section h3 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .comment-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e4e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .comment-meta {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .comment-text {
+            font-size: 0.95rem;
+            color: #333;
+        }
+        .comment-form {
+            margin-top: 30px;
+            background-color: #f1f3f5;
+            padding: 20px;
+            border-radius: 6px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+        .btn-submit {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="{% url 'artigos:lista_artigos' %}" class="back-link">← Voltar à lista de artigos</a>
+    
+    <h1>{{ artigo.titulo }}</h1>
+    
+    <div class="meta">
+        <div>
+            Por <strong>{{ artigo.autor.username }}</strong> em {{ artigo.data_criacao|date:"d/m/Y H:i" }}
+        </div>
+        
+        <!-- Mostra botões de editar/apagar só para o autor do artigo ou superuser -->
+        {% if user.is_authenticated and user == artigo.autor or user.is_superuser %}
+            <div class="author-actions">
+                <a href="{% url 'artigos:edita_artigo' artigo.id %}" class="edit">Editar Artigo</a>
+                <a href="{% url 'artigos:apaga_artigo' artigo.id %}" class="delete">Apagar Artigo</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Fotografia se existir -->
+    {% if artigo.fotografia %}
+        <img src="{{ artigo.fotografia.url }}" alt="{{ artigo.titulo }}" class="artigo-img">
+    {% endif %}
+
+    <!-- Conteúdo principal -->
+    <div class="artigo-texto">
+        {{ artigo.texto }}
+    </div>
+
+    <!-- Link Externo se existir -->
+    {% if artigo.link_externo %}
+        <div class="external-link">
+            🔗 <strong>Link útil relacionado:</strong> 
+            <a href="{{ artigo.link_externo }}" target="_blank">Visitar recurso externo &rarr;</a>
+        </div>
+    {% endif %}
+
+    <!-- Secção de Likes -->
+    <div class="like-section">
+        {% if user.is_authenticated %}
+            <a href="{% url 'artigos:gostar_artigo' artigo.id %}" class="btn-like {% if user in artigo.likes.all %}active{% endif %}">
+                {% if user in artigo.likes.all %}❤️ Gostei!{% else %}🤍 Gostar{% endif %}
+            </a>
+        {% else %}
+            <span class="btn-like" style="cursor: not-allowed; background-color: #f1f3f5; color: #aaa;">🤍 Gostar (inicia sessão para gostar)</span>
+        {% endif %}
+        <span><strong>{{ artigo.numero_de_likes }}</strong> pessoas gostaram deste artigo</span>
+    </div>
+
+    <!-- Secção de Comentários -->
+    <div class="comments-section">
+        <h3>💬 Comentários ({{ comentarios.count }})</h3>
+        
+        {% if comentarios %}
+            {% for comentario in comentarios %}
+                <div class="comment-card">
+                    <div class="comment-meta">
+                        Por <strong>{{ comentario.autor.username }}</strong> em {{ comentario.data_criacao|date:"d/m/Y H:i" }}
+                    </div>
+                    <div class="comment-text">
+                        {{ comentario.texto }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: #777; font-style: italic;">Ainda não há comentários neste artigo. Sê o primeiro a comentar!</p>
+        {% endif %}
+
+        <!-- Formulário de Comentário (apenas se autenticado) -->
+        {% if user.is_authenticated %}
+            <div class="comment-form">
+                <h4>Deixa o teu comentário:</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.texto }}
+                    <button type="submit" class="btn-submit">Publicar Comentário</button>
+                </form>
+            </div>
+        {% else %}
+            <p style="margin-top: 20px; background-color: #ffeeba; color: #856404; padding: 15px; border-radius: 4px;">
+                🔑 Precisas de <a href="{% url 'accounts:login' %}" style="color: #856404; font-weight: bold; text-decoration: underline;">iniciar sessão</a> para comentar.
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
