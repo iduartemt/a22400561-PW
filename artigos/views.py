@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .models import Artigo, Comentario
-from .forms import ArtigoForm, ComentarioForm
+from .forms import ArtigoForm, ComentarioForm, RatingForm
 
 def lista_artigos(request):
     artigos = Artigo.objects.all().order_by('-data_criacao')
@@ -12,22 +12,38 @@ def detalhe_artigo(request, artigo_id):
     artigo = get_object_or_404(Artigo, id=artigo_id)
     comentarios = artigo.comentarios.all().order_by('-data_criacao')
     
-    if request.method == 'POST' and request.user.is_authenticated:
-        # Só utilizadores autenticados podem submeter comentários
-        form = ComentarioForm(request.POST)
-        if form.is_valid():
-            comentario = form.save(commit=False)
-            comentario.artigo = artigo
-            comentario.autor = request.user
-            comentario.save()
-            return redirect('artigos:detalhe_artigo', artigo_id=artigo.id)
-    else:
-        form = ComentarioForm()
-        
+    comentario_form = ComentarioForm()
+    rating_form = RatingForm()
+    
+    if request.method == 'POST':
+        if 'submit_comentario' in request.POST:
+            comentario_form = ComentarioForm(request.POST)
+            if comentario_form.is_valid():
+                comentario = comentario_form.save(commit=False)
+                comentario.artigo = artigo
+                if request.user.is_authenticated:
+                    comentario.autor = request.user
+                    comentario.autor_nome = request.user.username
+                else:
+                    comentario.autor = None
+                    if not comentario.autor_nome.strip():
+                        comentario.autor_nome = 'Anónimo'
+                comentario.save()
+                return redirect('artigos:detalhe_artigo', artigo_id=artigo.id)
+                
+        elif 'submit_rating' in request.POST:
+            rating_form = RatingForm(request.POST)
+            if rating_form.is_valid():
+                rating = rating_form.save(commit=False)
+                rating.artigo = artigo
+                rating.save()
+                return redirect('artigos:detalhe_artigo', artigo_id=artigo.id)
+                
     context = {
         'artigo': artigo,
         'comentarios': comentarios,
-        'form': form,
+        'comentario_form': comentario_form,
+        'rating_form': rating_form,
     }
     return render(request, 'artigos/detalhe_artigo.html', context)
 

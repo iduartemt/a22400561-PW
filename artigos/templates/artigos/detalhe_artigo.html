@@ -81,7 +81,7 @@
             color: #007bff;
             font-weight: 600;
         }
-        /* Likes */
+        /* Likes & Ratings */
         .like-section {
             display: flex;
             align-items: center;
@@ -89,7 +89,7 @@
             padding: 20px 0;
             border-top: 1px solid #eaeaea;
             border-bottom: 1px solid #eaeaea;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .btn-like {
             background-color: #e2e6ea;
@@ -134,16 +134,26 @@
         .comment-form {
             margin-top: 30px;
             background-color: #f1f3f5;
-            padding: 20px;
+            padding: 25px;
             border-radius: 6px;
+            border: 1px solid #e1e4e6;
         }
+        .comment-form input[type="text"],
         .comment-form textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ced4da;
             border-radius: 4px;
-            margin-bottom: 15px;
+            margin-top: 5px;
             font-family: inherit;
+            box-sizing: border-box;
+        }
+        .rating-select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            font-family: inherit;
+            font-size: 0.95rem;
         }
         .btn-submit {
             background-color: #007bff;
@@ -168,7 +178,8 @@
     
     <div class="meta">
         <div>
-            Por <strong>{{ artigo.autor.username }}</strong> em {{ artigo.data_criacao|date:"d/m/Y H:i" }}
+            Por <strong>{{ artigo.autor.username }}</strong> em {{ artigo.data_criacao|date:"d/m/Y H:i" }} 
+            | ⭐ Média: <strong>{{ artigo.media_ratings }}</strong>/5.0
         </div>
         
         <!-- Mostra botões de editar/apagar só para o autor do artigo ou superuser -->
@@ -210,6 +221,22 @@
         <span><strong>{{ artigo.numero_de_likes }}</strong> pessoas gostaram deste artigo</span>
     </div>
 
+    <!-- Secção de Ratings (Qualquer pessoa/visitante pode dar rating) -->
+    <div class="rating-section" style="padding: 20px 0; border-bottom: 1px solid #eaeaea; margin-bottom: 30px;">
+        <h4 style="margin-top: 0; margin-bottom: 10px;">⭐ Classificar este artigo:</h4>
+        <p style="margin: 0; color: #666; font-size: 0.95rem;">
+            Média de avaliações: <strong style="font-size: 1.1rem; color: #111;">{{ artigo.media_ratings }}</strong> / 5.0 estrelas 
+            (baseado em {{ artigo.ratings.count }} votos)
+        </p>
+        
+        <form method="POST" style="margin-top: 15px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+            {% csrf_token %}
+            <label for="{{ rating_form.valor.id_for_label }}" style="font-weight: 500;">O teu voto:</label>
+            {{ rating_form.valor }}
+            <button type="submit" name="submit_rating" class="btn-submit" style="padding: 8px 16px; font-size: 0.9rem;">Votar</button>
+        </form>
+    </div>
+
     <!-- Secção de Comentários -->
     <div class="comments-section">
         <h3>💬 Comentários ({{ comentarios.count }})</h3>
@@ -218,7 +245,8 @@
             {% for comentario in comentarios %}
                 <div class="comment-card">
                     <div class="comment-meta">
-                        Por <strong>{{ comentario.autor.username }}</strong> em {{ comentario.data_criacao|date:"d/m/Y H:i" }}
+                        Por <strong>{{ comentario.autor_nome }}</strong> em {{ comentario.data_criacao|date:"d/m/Y H:i" }}
+                        {% if comentario.autor %} <span style="font-size: 0.75rem; background-color: #e2e6ea; padding: 2px 6px; border-radius: 10px; margin-left: 5px;">Membro</span> {% endif %}
                     </div>
                     <div class="comment-text">
                         {{ comentario.texto }}
@@ -229,21 +257,27 @@
             <p style="color: #777; font-style: italic;">Ainda não há comentários neste artigo. Sê o primeiro a comentar!</p>
         {% endif %}
 
-        <!-- Formulário de Comentário (apenas se autenticado) -->
-        {% if user.is_authenticated %}
-            <div class="comment-form">
-                <h4>Deixa o teu comentário:</h4>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ form.texto }}
-                    <button type="submit" class="btn-submit">Publicar Comentário</button>
-                </form>
-            </div>
-        {% else %}
-            <p style="margin-top: 20px; background-color: #ffeeba; color: #856404; padding: 15px; border-radius: 4px;">
-                🔑 Precisas de <a href="{% url 'accounts:login' %}" style="color: #856404; font-weight: bold; text-decoration: underline;">iniciar sessão</a> para comentar.
-            </p>
-        {% endif %}
+        <!-- Formulário de Comentário (QUALQUER PESSOA PODE COMENTAR!) -->
+        <div class="comment-form">
+            <h4 style="margin-top: 0; margin-bottom: 15px;">Deixa o teu comentário:</h4>
+            <form method="POST">
+                {% csrf_token %}
+                
+                {% if not user.is_authenticated %}
+                    <div style="margin-bottom: 15px;">
+                        <label for="{{ comentario_form.autor_nome.id_for_label }}"><strong>{{ comentario_form.autor_nome.label }}:</strong></label>
+                        {{ comentario_form.autor_nome }}
+                    </div>
+                {% endif %}
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="{{ comentario_form.texto.id_for_label }}"><strong>{{ comentario_form.texto.label }}:</strong></label>
+                    {{ comentario_form.texto }}
+                </div>
+                
+                <button type="submit" name="submit_comentario" class="btn-submit">Publicar Comentário</button>
+            </form>
+        </div>
     </div>
 </div>
 
