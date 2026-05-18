@@ -30,8 +30,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; /* Permitir que o menu envolva se for muito grande */
+            flex-wrap: wrap;
             gap: 15px;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        @media (min-width: 901px) {
+            .nav-header {
+                width: auto;
+            }
         }
 
         .nav-brand {
@@ -39,6 +52,22 @@
             font-weight: 800;
             letter-spacing: -0.5px;
             white-space: nowrap;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #d8f58b;
+            user-select: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            gap: 15px;
         }
 
         .nav-links {
@@ -136,9 +165,30 @@
             .hero-content h1 {
                 font-size: 3rem;
             }
-            nav {
+            .hamburger {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
                 flex-direction: column;
-                text-align: center;
+                width: 100%;
+                gap: 20px;
+                padding-top: 15px;
+                border-top: 1px solid #222;
+            }
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                gap: 15px;
+            }
+            .nav-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+            }
+            .mostrar {
+                display: flex;
             }
         }
     </style>
@@ -147,30 +197,35 @@
 
     <!-- Navegação Topo com o "Menu Pequeno" pedido -->
     <nav>
-        <div class="nav-brand">Duarte Martins</div>
-        
-        <div class="nav-links">
-            <a href="{% url 'cursos' %}">Formações Académicas</a>
-            <a href="{% url 'projetos' %}">Projetos</a>
-            <a href="{% url 'tecnologias' %}">Tecnologias</a>
-            <a href="{% url 'tfcs' %}">TFCs</a>
-            <a href="{% url 'docentes' %}">Docentes</a>
-            <a href="{% url 'alunos' %}">Alunos</a>
-            <a href="{% url 'competencias' %}">Competências</a>
-            <a href="{% url 'formacoes' %}">Formações</a>
-            <a href="{% url 'artigos:lista_artigos' %}">Artigos</a>
-            <a href="{% url 'sobre' %}">Sobre</a>
-            <a href="{% url 'makingof' %}">Making Of</a>
+        <div class="nav-header">
+            <div class="nav-brand">Duarte Martins</div>
+            <span class="hamburger">&#9776;</span>
         </div>
         
-        <div class="nav-buttons">
-            {% if user.is_authenticated %}
-                <span class="btn-signin">Olá, {{ user.username }}!</span>
-                <a href="{% url 'accounts:logout' %}" class="btn-signup" style="background-color: #dc3545; color: white;">Logout</a>
-            {% else %}
-                <a href="{% url 'accounts:login' %}" class="btn-signin">Login</a>
-                <a href="{% url 'accounts:registo' %}" class="btn-signup">Registo</a>
-            {% endif %}
+        <div class="nav-menu">
+            <div class="nav-links">
+                <a href="{% url 'cursos' %}">Formações Académicas</a>
+                <a href="{% url 'projetos' %}">Projetos</a>
+                <a href="{% url 'tecnologias' %}">Tecnologias</a>
+                <a href="{% url 'tfcs' %}">TFCs</a>
+                <a href="{% url 'docentes' %}">Docentes</a>
+                <a href="{% url 'alunos' %}">Alunos</a>
+                <a href="{% url 'competencias' %}">Competências</a>
+                <a href="{% url 'formacoes' %}">Formações</a>
+                <a href="{% url 'artigos:lista_artigos' %}">Artigos</a>
+                <a href="{% url 'sobre' %}">Sobre</a>
+                <a href="{% url 'makingof' %}">Making Of</a>
+            </div>
+            
+            <div class="nav-buttons">
+                {% if user.is_authenticated %}
+                    <span class="btn-signin">Olá, {{ user.username }}!</span>
+                    <a href="{% url 'accounts:logout' %}" class="btn-signup" style="background-color: #dc3545; color: white;">Logout</a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="btn-signin">Login</a>
+                    <a href="{% url 'accounts:registo' %}" class="btn-signup">Registo</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 
@@ -198,5 +253,13 @@
 
     </section>
 
+    <script>
+        const menu = document.querySelector('.nav-menu');
+        const botao = document.querySelector('.hamburger');
+
+        botao.addEventListener('click', () => {
+            menu.classList.toggle('mostrar');
+        });
+    </script>
 </body>
 </html>
