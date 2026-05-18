@@ -168,6 +168,21 @@ def populate():
         commit_hash="2395e80"
     )
 
+    # Registo 14: Arquitetura Web e Pipeline CI/CD (Desenho à Mão)
+    MakingOf.objects.create(
+        titulo="Arquitetura Web e Pipeline CI/CD",
+        entidade="Docker, GitHub Actions, Neon Postgres, Cloudinary",
+        imagem="makingof/pipeline_cicd.jpeg",
+        descricao_processo="Ficha 4 — Implementação e documentação da arquitetura web profissional e pipeline automatizada de Integração Contínua e Entrega Contínua (CI/CD). O processo consiste em desenhar uma infraestrutura resiliente de deploy.\n\nComponentes da Arquitetura:\n1. User Browser (Frontend): O ponto de entrada da aplicação, onde os utilizadores acedem via HTTP/HTTPS.\n2. Docker Container (Backend): O container que corre a aplicação Django e serve os ficheiros estáticos.\n3. Neon PostgreSQL: A base de dados relacional gerida na nuvem Neon, que guarda a persistência.\n4. Cloudinary: O armazenamento cloud externo que guarda todas as fotos e ficheiros de media.\n5. Codespaces / VS Code: O ambiente local onde desenvolvemos o código e enviamos alterações via Git.\n6. GitHub Actions: A pipeline de CI/CD que corre automaticamente testes e builds a cada push.\n7. Servidor de Produção: O servidor final Docker que recebe a imagem e a disponibiliza na internet.",
+        justificacao_modelacao="O desacoplamento entre servidor web (Django), media (Cloudinary) e dados (Neon) segue as boas práticas do setor, garantindo que o servidor web permaneça livre de estado ('stateless') e possa escalar facilmente no futuro. O Docker garante que o ambiente de teste local é 100% igual ao de produção, eliminando surpresas desagradáveis.",
+        erros_correcao="Dificuldade: Configuração das variáveis de ambiente e segredos sensíveis da base de dados e do Cloudinary na pipeline de CI/CD do GitHub Actions. Correção: Utilização do painel de segredos do repositório (GitHub Secrets) e injeção dinâmica de variáveis no settings.py do Django via módulo python-dotenv.",
+        uso_ia="A Inteligência Artificial Generativa (Antigravity) funcionou como assessora de DevOps. Sugeriu a melhor arquitetura de serviços cloud e auxiliou na configuração correta do Dockerfile, do docker-compose.yml e do ficheiro YAML de workflows do GitHub Actions, poupando dezenas de horas de tentativas falhadas e otimizando a recolha de staticfiles.",
+        data=date(2026, 5, 18),
+        tipo_registo="Arquitetura e DevOps",
+        quantidade_iteracoes=4,
+        commit_hash="013ab74"
+    )
+
     print("Base de dados de Making Of preenchida com sucesso e alinhada com o histórico Real de Git!")
 
 if __name__ == '__main__':
