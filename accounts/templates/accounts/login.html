@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <!DOCTYPE html>
 <html>
 
@@ -61,6 +62,13 @@
         <a href="{% url 'accounts:pedir_link' %}" class="btn"
             style="background-color: #17a3b8; text-align: center; width: 95%; box-sizing: border-box;">🪄 Entrar com
             Link Mágico (Sem Password)</a>
+        
+        <a href="{% provider_login_url 'google' %}" class="btn"
+            style="background-color: #db4437; text-align: center; width: 95%; box-sizing: border-box; margin-top: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg style="width: 16px; height: 16px; fill: white;" viewBox="0 0 24 24"><path d="M12.24 10.285V13.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l2.427-2.334C17.955 2.192 15.34 1 12.24 1 6.033 1 12.24s5.033 11.24 11.24 11.24c6.478 0 10.793-4.537 10.793-10.986 0-.746-.08-1.32-.176-1.886H12.24z"/></svg>
+            Entrar com Google
+        </a>
+
         <p>Ainda não tens conta? <a href="{% url 'accounts:registo' %}">Regista-te aqui</a></p>
         <hr>
         <a href="{% url 'home' %}" class="btn btn-secondary">Voltar ao Menu</a>
