@@ -8,6 +8,10 @@ from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
 from django.contrib.auth.decorators import login_required
 
 
+def landing_page_view(request):
+    # Nova landing page pedida
+    return render(request, 'portfolio/landing.html')
+
 def home(request):
     # Página inicial passa a ser apenas um menu global, já não precisa de carregar a licenciatura
     return render(request, 'portfolio/home.html')
