@@ -11,8 +11,8 @@ from artigos.models import Artigo
 def seed():
     print("A iniciar o povoamento de artigos de teste...")
     
-    # 1. Garante que o grupo 'autores' existe
-    grupo_autores, _ = Group.objects.get_or_create(name='autores')
+    # 1. Garante que o grupo 'bloggers' existe
+    grupo_bloggers, _ = Group.objects.get_or_create(name='bloggers')
     
     # 2. Garante que temos pelo menos um utilizador autor para associar aos artigos
     user, created = User.objects.get_or_create(username='admin')
@@ -23,8 +23,8 @@ def seed():
         user.save()
         print("Criado utilizador superuser 'admin' com a password 'admin123'")
     
-    # Adiciona o user ao grupo autores
-    user.groups.add(grupo_autores)
+    # Adiciona o user ao grupo bloggers
+    user.groups.add(grupo_bloggers)
     
     # 3. Criar os 3 artigos interessantes se ainda não existirem
     artigos_dados = [

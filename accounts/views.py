@@ -13,9 +13,9 @@ def registo_view(request):
         if form.is_valid():
             user = form.save()
             
-            # Criamos ou procuramos o grupo 'autores' e adicionamos o utilizador a ele
-            grupo_autores, created = Group.objects.get_or_create(name='autores')
-            user.groups.add(grupo_autores)
+            # Criamos ou procuramos o grupo 'bloggers' e adicionamos o utilizador a ele
+            grupo_bloggers, created = Group.objects.get_or_create(name='bloggers')
+            user.groups.add(grupo_bloggers)
             
             login(request, user) # Faz login automático após o registo
             return redirect('home')

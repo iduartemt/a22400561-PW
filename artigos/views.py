@@ -33,8 +33,8 @@ def detalhe_artigo(request, artigo_id):
 
 @login_required
 def novo_artigo(request):
-    # Apenas utilizadores do grupo 'autores' podem criar
-    if not request.user.groups.filter(name='autores').exists() and not request.user.is_superuser:
+    # Apenas utilizadores do grupo 'bloggers' podem criar
+    if not request.user.groups.filter(name='bloggers').exists() and not request.user.is_superuser:
         raise PermissionDenied("Não tens permissões para criar artigos.")
         
     if request.method == 'POST':
