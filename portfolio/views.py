@@ -342,3 +342,6 @@ def sobre_view(request):
         'projeto': portfolio_projeto,
         'making_of_content': making_of_content
     })
+
+def videos_view(request):
+    return render(request, 'portfolio/videos.html')

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videotutoriais</title>
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #162447;
+            --accent: #e43f5a;
+            --bg: #0f0f1a;
+            --card-bg: #1f4068;
+            --text-light: #e4e4e4;
+            --text-muted: #a0a0a0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 300;
+        }
+
+        nav {
+            background-color: var(--primary);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            border: 1.5px solid var(--accent);
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(228, 63, 90, 0.1);
+        }
+
+        nav a:hover {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 15px rgba(228, 63, 90, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 25px;
+            box-sizing: border-box;
+        }
+
+        .intro-card {
+            background-color: rgba(26, 26, 46, 0.7);
+            border: 1px solid rgba(228, 63, 90, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .intro-card h2 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 1.6rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .video-card {
+            background-color: rgba(31, 64, 104, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(228, 63, 90, 0.4);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 25px;
+        }
+
+        .video-info h3 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        .video-info p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .badge-container {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .badge {
+            background-color: var(--accent);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .badge-outline {
+            background-color: transparent;
+            border: 1.5px solid var(--text-muted);
+            color: var(--text-light);
+        }
+
+        .highlight-box {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+        }
+
+        .highlight-box h4 {
+            margin: 0 0 5px 0;
+            color: #ffffff;
+        }
+
+        .highlight-box ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--primary);
+            color: var(--text-muted);
+            margin-top: 60px;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="{% url 'home' %}">← Voltar ao Menu Principal</a>
+    </nav>
+
+    <header>
+        <h1>Videotutoriais do Projeto</h1>
+        <p>Aprende, explora e domina o desenvolvimento de aplicações com Django</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="intro-card">
+            <h2>🎥 Espaço de Partilha e Consolidação</h2>
+            <p>
+                Bem-vindo à página de videotutoriais da nossa aplicação! Este espaço foi desenhado especificamente para consolidar a matéria lecionada ao longo do semestre, servindo tanto de suporte para avaliação entre colegas como de repositório de consulta para relembrar conceitos práticos de engenharia web.
+            </p>
+        </div>
+
+        <div class="video-grid">
+            
+            <!-- Video 1: Videotutorial Django Ficha 8 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube-nocookie.com/embed/aLabAb7BSX8" 
+                            title="Videotutorial Ficha 8: Desenvolvimento de Aplicação Django" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div class="video-info">
+                    <div class="badge-container">
+                        <span class="badge">Ficha 8</span>
+                        <span class="badge badge-outline">Django MVC / MVT</span>
+                        <span class="badge badge-outline">Formulários</span>
+                    </div>
+                    
+                    <h3>Desenvolvimento e Modelação de Aplicação Django</h3>
+                    <p>
+                        Este videotutorial detalha o processo de criação de formulários interativos no Django para submissão e gestão dinâmica de projetos. Demonstra o fluxo completo do modelo MVT (Model-View-Template), mapeamento de rotas com segurança anti-CSRF e o povoamento estruturado na base de dados.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <h4>🔑 Principais Conceitos Abordados:</h4>
+                        <ul>
+                            <li><strong>Modelação Programática:</strong> Configuração de campos e relacionamentos no <code>models.py</code>.</li>
+                            <li><strong>Django ModelForms:</strong> Criação ágil e segura de formulários a partir de modelos preexistentes.</li>
+                            <li><strong>Fluxo de Pedidos HTTP:</strong> Comunicação limpa entre Views de criação, Edição e Templates de renderização.</li>
+                            <li><strong>Segurança:</strong> Utilização da tag <code>{% csrf_token %}</code> para mitigar ataques cross-site.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - Portfólio de Programação Web | Desenvolvido com Django e Habilidade</p>
+    </footer>
+
+</body>
+</html>
