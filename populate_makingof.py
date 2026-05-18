@@ -141,7 +141,7 @@ def populate():
         commit_hash="1525884"
     )
 
-    # Registo 12: Melhorias de UI/UX e Media (Recente)
+    # Registo 12: Melhorias de UI/UX e Media
     MakingOf.objects.create(
         titulo="Melhorias de UI/UX e Configuração de Media",
         entidade="Frontend, Settings",
@@ -151,6 +151,21 @@ def populate():
         tipo_registo="UI/UX e Correção de Bugs",
         quantidade_iteracoes=1,
         commit_hash="30674b7"
+    )
+
+    # Registo 13: Ficha 5 - App Artigos, Sistema de Bloggers, Likes, Comentários, Ratings Médios e Menu Responsivo
+    MakingOf.objects.create(
+        titulo="Ficha 5: App Artigos, Bloggers, Likes, Comentários e Menu Responsivo",
+        entidade="Artigos, Comentario, Rating, Home Navbar",
+        descricao_processo="Criação da app 'artigos', destinada à publicação de conteúdos. Implementação dos modelos Artigo, Comentario e Rating. Criação automática do grupo 'bloggers' no registo de utilizadores. Integração de likes e sistema de comentários dinâmico (comentários anónimos permitidos!). Criação de 3 artigos de teste. Implementação de menu responsivo hambúrguer (dropdown) no topo da Home Page.",
+        justificacao_modelacao="O modelo Rating foi desenhado com relação ForeignKey para o Artigo. O cálculo da média das pontuações é feito em tempo real com a função 'media_ratings()' no modelo Artigo, evitando redundância na base de dados. O modelo Comentario passou a permitir 'autor' como nulo para que visitantes anónimos possam comentar usando um campo de nome customizado.",
+        sugestoes_implementadas="Utilizadores que se registam entram automaticamente no grupo 'bloggers'. Apenas membros deste grupo podem criar artigos e editar os seus próprios artigos. A navegação no topo da Landing Page foi atualizada para incluir a ligação de Artigos e adaptada com um botão hambúrguer responsivo para telemóveis.",
+        erros_correcao="Dificuldade: Permitir comentários anónimos mantendo a integridade do modelo. Correção: O campo 'autor' passou a aceitar NULL e adicionámos o campo 'autor_nome' padrão 'Anónimo' para quando o utilizador não está logado.\n\nDificuldade: Conflitos com o reverse das rotas do accounts no login do link mágico. Correção: Ajustadas importações corretas de 'reverse' após alterações.",
+        uso_ia="A Inteligência Artificial Generativa (Antigravity) funcionou como copiloto ativo. Ajudou na estruturação limpa dos formulários múltiplos (comentário + classificação), na otimização do CSS responsivo da barra de topo e no povoamento automático da base de dados com 3 artigos interessantes (Markdown, Soft Skills e Design Responsivo). A IA gerou ainda as imagens de herói personalizadas inspiradas em League of Legends (lol_hero.png).",
+        data=date(2026, 5, 18),
+        tipo_registo="Implementação de Feature e Refactoring",
+        quantidade_iteracoes=6,
+        commit_hash="2395e80"
     )
 
     print("Base de dados de Making Of preenchida com sucesso e alinhada com o histórico Real de Git!")
