@@ -118,6 +118,41 @@ def populate():
         commit_hash="c11ed5b"
     )
     
+    # Registo 10: Página Sobre e Documentação
+    MakingOf.objects.create(
+        titulo="Criação da Página 'Sobre' e Documentação",
+        entidade="Página Sobre",
+        descricao_processo="Foi criada a página estática '/sobre' (com renderização de markdown e diagramas Mermaid) para explicar a arquitetura MVT, incluir o vídeo do tutorial e detalhar as tecnologias.",
+        data=date(2026, 5, 12),
+        tipo_registo="Implementação de Feature",
+        quantidade_iteracoes=4,
+        commit_hash="97c8c9a"
+    )
+
+    # Registo 11: Segurança e Login Mágico
+    MakingOf.objects.create(
+        titulo="Sistema de Autenticação e Login por Link Mágico",
+        entidade="Accounts, Views",
+        descricao_processo="Implementação completa do fluxo de autenticação e segurança, com proteção das rotas através de verificações de permissões e configuração de Login por Link Mágico.",
+        justificacao_modelacao="A segurança e privacidade são vitais; a implementação garante que apenas utilizadores com as permissões corretas (ex: Gestor) podem criar ou editar dados.",
+        data=date(2026, 5, 16),
+        tipo_registo="Segurança e Acessos",
+        quantidade_iteracoes=2,
+        commit_hash="1525884"
+    )
+
+    # Registo 12: Melhorias de UI/UX e Media (Recente)
+    MakingOf.objects.create(
+        titulo="Melhorias de UI/UX e Configuração de Media",
+        entidade="Frontend, Settings",
+        descricao_processo="Remodelação do design da página inicial com um fundo 'Mesh Gradient' minimalista, correção de conflitos de exibição das imagens nos templates e refinamento visual.",
+        erros_correcao="Erro: Imagens não renderizavam. Correção: A rota de MEDIA estava mal mapeada no settings.py e em falta no urls.py. Adicionados ficheiros estáticos ao servidor Django.",
+        data=date(2026, 5, 18),
+        tipo_registo="UI/UX e Correção de Bugs",
+        quantidade_iteracoes=1,
+        commit_hash="30674b7"
+    )
+
     print("Base de dados de Making Of preenchida com sucesso e alinhada com o histórico Real de Git!")
 
 if __name__ == '__main__':
