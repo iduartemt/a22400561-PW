@@ -1,123 +1,196 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-
+<html lang="pt">
 <head>
-    <title>Portfolio Acadêmico - Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duarte Martins - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 50px 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #d8f58b; /* Lima claro aproximado da imagem */
+            color: #111;
             min-height: 100vh;
-            color: #2c3e50;
-            
-            /* Fundo Premium Minimalista (Mesh Gradient Suave) */
-            background-color: #fafbfc;
-            background-image: 
-                radial-gradient(at 40% 20%, hsla(228, 100%, 74%, 0.12) 0px, transparent 50%),
-                radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 0.12) 0px, transparent 50%),
-                radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 0.12) 0px, transparent 50%),
-                radial-gradient(at 80% 50%, hsla(340, 100%, 76%, 0.12) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, hsla(22, 100%, 77%, 0.12) 0px, transparent 50%),
-                radial-gradient(at 80% 100%, hsla(242, 100%, 70%, 0.12) 0px, transparent 50%),
-                radial-gradient(at 0% 0%, hsla(343, 100%, 76%, 0.12) 0px, transparent 50%);
-            background-attachment: fixed;
-            
-            /* Centrar o conteúdo globalmente */
             display: flex;
             flex-direction: column;
+        }
+
+        /* Top Navigation */
+        nav {
+            background-color: #0b0b0b;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap; /* Permitir que o menu envolva se for muito grande */
+            gap: 15px;
         }
 
-        h1 {
-            font-weight: 700;
+        .nav-brand {
+            font-size: 1.4rem;
+            font-weight: 800;
             letter-spacing: -0.5px;
-            margin-bottom: 10px;
-            text-align: center;
+            white-space: nowrap;
         }
 
-        .menu-container {
+        .nav-links {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            max-width: 900px;
-            margin-top: 20px;
+            justify-content: center;
         }
 
-        .menu-btn {
-            background-color: #007bff;
-            color: white;
+        .nav-links a {
+            color: #ddd;
             text-decoration: none;
-            border-radius: 5px;
-            font-size: 14px;
-            width: 200px;         /* Largura fixa e igual para todos */
-            height: 60px;         /* Altura fixa e igual para todos */
-            display: flex;        
-            align-items: center;  /* Centra o texto na vertical */
-            justify-content: center; /* Centra o texto na horizontal */
-            text-align: center;
-            box-sizing: border-box;
-            padding: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
         }
 
-        .menu-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-            transition: all 0.2s ease-in-out;
+        .nav-links a:hover {
+            color: #d8f58b;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .btn-signin {
+            color: white;
+        }
+
+        .btn-signup {
+            background-color: white;
+            color: black;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex: 1;
+            padding: 60px 80px;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 30px;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                padding: 40px 20px;
+            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
-
 <body>
-    <h1>Menu Principal - Portfolio</h1>
 
-    <!-- O nosso Menu de Navegação Global -->
-    <div class="menu-container">
-        <!-- Nova página de Listagem de Cursos -->
-        <a class="menu-btn" href="{% url 'cursos' %}">Formações Académicas</a>
+    <!-- Navegação Topo com o "Menu Pequeno" pedido -->
+    <nav>
+        <div class="nav-brand">Duarte Martins</div>
+        
+        <div class="nav-links">
+            <a href="{% url 'cursos' %}">Formações Académicas</a>
+            <a href="{% url 'projetos' %}">Projetos</a>
+            <a href="{% url 'tecnologias' %}">Tecnologias</a>
+            <a href="{% url 'tfcs' %}">TFCs</a>
+            <a href="{% url 'docentes' %}">Docentes</a>
+            <a href="{% url 'alunos' %}">Alunos</a>
+            <a href="{% url 'competencias' %}">Competências</a>
+            <a href="{% url 'formacoes' %}">Formações</a>
+            <a href="{% url 'sobre' %}">Sobre</a>
+            <a href="{% url 'makingof' %}">Making Of</a>
+        </div>
+        
+        <div class="nav-buttons">
+            {% if user.is_authenticated %}
+                <span class="btn-signin">Olá, {{ user.username }}!</span>
+                <a href="{% url 'accounts:logout' %}" class="btn-signup" style="background-color: #dc3545; color: white;">Logout</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn-signin">Login</a>
+                <a href="{% url 'accounts:registo' %}" class="btn-signup">Registo</a>
+            {% endif %}
+        </div>
+    </nav>
 
-        <!-- Link para a página de Projetos que já ativaste -->
-        <a class="menu-btn" href="{% url 'projetos' %}">Projetos</a>
+    <!-- Hero Section Principal -->
+    <section class="hero">
+        
+        <div class="hero-content">
+            <h1>Ideias que inspiram, constroem e inovam.</h1>
+            <p>
+                Bem-vindo ao meu portfólio académico. Aqui exploro o melhor
+                da criatividade no desenvolvimento web, demonstrando as minhas 
+                competências, projetos desenvolvidos e todo o meu percurso na 
+                Engenharia Informática.
+            </p>
+        </div>
 
-        <!-- Link ativado para as tecnologias -->
-        <a class="menu-btn" href="{% url 'tecnologias' %}">Tecnologias</a>
+        <div class="hero-image">
+            <img src="{% static 'portfolio/images/landing_hero.png' %}" alt="Estudante inspirador">
+        </div>
 
-        <!-- Link ativado para os TFCs -->
-        <a class="menu-btn" href="{% url 'tfcs' %}">Trabalhos Finais de Curso (TFCs)</a>
+    </section>
 
-        <!-- Link ativado para os Docentes -->
-        <a class="menu-btn" href="{% url 'docentes' %}">Docentes</a>
-
-        <!-- Link ativado para os Alunos -->
-        <a class="menu-btn" href="{% url 'alunos' %}">Alunos</a>
-
-        <!-- Link ativado para as Competências -->
-        <a class="menu-btn" href="{% url 'competencias' %}">Competências</a>
-
-        <!-- Link ativado para as Formações -->
-        <a class="menu-btn" href="{% url 'formacoes' %}">Formações</a>
-
-        <hr style="width: 100%; border: 1px solid #ccc; margin: 10px 0;">
-
-        {% if user.is_authenticated %}
-        <p style="margin: 0; font-weight: bold;">Olá, {{ user.username }}!</p>
-        <a class="menu-btn" style="background-color: #dc3545;" href="{% url 'accounts:logout' %}">Terminar Sessão
-            (Logout)</a>
-        {% else %}
-        <a class="menu-btn" style="background-color: #17a2b8;" href="{% url 'accounts:login' %}">Entrar (Login)</a>
-        <a class="menu-btn" style="background-color: #6c757d;" href="{% url 'accounts:registo' %}">Registar Conta</a>
-        {% endif %}
-
-        <hr style="width: 100%; border: 1px solid #ccc; margin: 10px 0;">
-        <!-- Link para o Making Of -->
-        <a class="menu-btn" style="background-color: #343a40;" href="{% url 'makingof' %}">Making Of (Diário de
-            Bordo)</a>
-
-        <!-- Novo Link para Sobre esta Aplicação -->
-        <a class="menu-btn" style="background-color: #28a745;" href="{% url 'sobre' %}">Sobre esta Aplicação</a>
-    </div>
 </body>
-
 </html>
