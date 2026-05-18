@@ -28,20 +28,13 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("django-insecure-k)8+q+ua6u0ljy=ma47yigv!sf%2(h8mr_ysiu)op^xejz7=z_", default="dummy")
+SECRET_KEY = "django-insecure-k)8+q+ua6u0ljy=ma47yigv!sf%2(h8mr_ysiu)op^xejz7=z_"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = [
-    'https://duartemartins-a22400561.pw.deisi.ulusofona.pt',
-]
+ALLOWED_HOSTS = ['duartemartins-a22400561.pw.deisi.ulusofona.pt', '127.0.0.1', 'localhost']
 
-USE_X_FORWARDED_HOST = True
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SITE_BASE_URL = env('SITE_BASE_URL', default=None)
 
 # Application definition
 
@@ -117,13 +110,13 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="sqlite:///db.sqlite3")
+    "default": env.db("DATABASE_URL")
 }
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default='dummy'),
-    'API_KEY': env('CLOUDINARY_API_KEY', default='dummy'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET', default='dummy'),
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
 }
 
 
@@ -183,4 +176,4 @@ LOGIN_URL = 'accounts:login'
 
 import os
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

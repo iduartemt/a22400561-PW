@@ -34,7 +34,7 @@
 
     <!-- O link de voltar tem de ficar FORA do ciclo for! -->
     <p><a href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
-    {% if user.is_authenticated and user.groups.all.0.name == 'gestor-portfolio' %}
+    {% if perms.portfolio.add_projeto %}
     <p><a href="{% url 'novo_projeto' %}" style="background: #28a745; color: white; padding: 8px; border-radius: 4px;">➕
             Adicionar Novo Projeto</a></p>
     {% endif %}
@@ -54,7 +54,7 @@
                 {% if projeto.github_url %}
                 <a href="{{ projeto.github_url }}" target="_blank">Ver no GitHub</a>
                 {% endif %}
-                {% if user.is_authenticated and user.groups.all.0.name == 'gestor-portfolio' %}
+                {% if perms.portfolio.change_projeto or perms.portfolio.delete_projeto %}
                 <a href="{% url 'edita_projeto' projeto.id %}" style="color: orange;">📝 Editar</a> |
                 <a href="{% url 'apaga_projeto' projeto.id %}" style="color: red;">🗑️ Apagar</a>
                 {% endif %}
