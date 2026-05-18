@@ -379,59 +379,96 @@
         <!-- 7. GITHUB -->
         <div class="section-card">
             <h2>7. Repositório GitHub</h2>
-            <p>O código-fonte deste projeto encontra-se alojado no GitHub, garantindo versionamento e integridade do
-                código.</p>
+            <p>O código-fonte deste projeto encontra-se alojado no GitHub, garantindo versionamento e integridade do código.</p>
             <div class="placeholder-alert" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724;">
                 <strong>🔗 Link para Repositório:</strong>
-                <a href="https://github.com/iduartemt/Duarte-Martins-a22400561-PW" target="_blank">Visitar o Repositório no GitHub</a>
+                <a href="https://github.com/iduartemt/a22400561-PW" target="_blank" style="font-weight: bold; color: #155724;">Visitar o Repositório no GitHub (iduartemt/a22400561-PW)</a>
             </div>
 
             <h3>Vantagens do uso de Git/GitHub</h3>
             <div class="grid-info">
                 <div class="info-item" style="border-left-color: #24292e;">
                     <h3>Controle de Versões</h3>
-                    <p>Permite gravar estados (commits), voltar atrás em caso de erro e ramificar experiências sem
-                        estragar o código principal.</p>
+                    <p>Permite gravar estados (commits), voltar atrás em caso de erro e ramificar experiências sem estragar o código principal.</p>
                 </div>
                 <div class="info-item" style="border-left-color: #24292e;">
                     <h3>Cópia de Segurança & Cloud</h3>
-                    <p>Garante que o código não se perde em caso de falha local, facilitando a partilha segura e backup
-                        centralizado.</p>
+                    <p>Garante que o código não se perde em caso de falha local, facilitando a partilha segura e backup centralizado.</p>
                 </div>
             </div>
         </div>
 
-        <!-- 8. MAKING-OF -->
+        <!-- 8. ARQUITETURA EM PRODUÇÃO E PIPELINE CI/CD -->
         <div class="section-card">
-            <h2>8. Resumo de Desenvolvimento (Making-Of)</h2>
-            <p>Em baixo encontra-se o registo em tempo real do progresso e dificuldades sentidas ao longo das semanas
-                (carregado dinamicamente do ficheiro markdown do projeto):</p>
-            <div class="markdown-content"
-                style="background: #fafafa; padding: 25px; border: 1px solid #eaeaea; border-radius: 8px;">
+            <h2>8. Arquitetura da Solução em Produção e Pipeline CI/CD</h2>
+            <p>Para além do ciclo de funcionamento local, a aplicação foi arquitetada para correr de forma profissional e resiliente na nuvem de produção. Mapeámos e desenhámos à mão o fluxo que liga o computador local ao servidor final.</p>
+
+            <div class="img-box">
+                <h4>Esquema Arquitetural e Pipeline CI/CD (Desenho à Mão no Papel)</h4>
+                <img src="/media/makingof/pipeline_cicd.jpeg" alt="Desenho Manual da Arquitetura e Pipeline CI/CD">
+                <p style="font-size: 0.9em; color: #777; font-style: italic; margin-top: 10px;">Diagrama que ilustra a integração do desenvolvimento local, controlo com Git/GitHub, empacotamento com Docker, armazenamento cloud de dados e media, e o deploy automatizado.</p>
+            </div>
+
+            <h3>Detalhamento dos 7 Componentes Principais:</h3>
+            <div class="grid-info">
+                <div class="info-item" style="border-left-color: #007bff;">
+                    <h3>1. PC Local (VS Code & Git)</h3>
+                    <p>O ambiente local onde o código é produzido. O Git regista cada alteração em commits e ramificações de segurança.</p>
+                </div>
+                <div class="info-item" style="border-left-color: #007bff;">
+                    <h3>2. Servidor Django Local</h3>
+                    <p>O ambiente de execução local (usando SQLite) onde testamos e validamos as páginas dinâmicas em <code>http://127.0.0.1:8000</code>.</p>
+                </div>
+                <div class="info-item" style="border-left-color: #24292e;">
+                    <h3>3. Repositório GitHub</h3>
+                    <p>Atua como o "Hub de sincronização". O código é empurrado via <code>git push</code> para o repositório remoto.</p>
+                </div>
+                <div class="info-item" style="border-left-color: #28a745;">
+                    <h3>4. Pipeline CI/CD</h3>
+                    <p>Processo de automatização. Um robô em nuvem monitoriza os pushes, executa testes e despoleta o deploy seguro no servidor final.</p>
+                </div>
+                <div class="info-item" style="border-left-color: #17a2b8;">
+                    <h3>5. Contentor Docker</h3>
+                    <p>Garante a portabilidade absoluta do sistema. A aplicação e dependências (pip, django, cloudinary, etc.) correm de forma isolada dentro de um contentor idêntico em qualquer máquina.</p>
+                </div>
+                <div class="info-item" style="border-left-color: #ffc107;">
+                    <h3>6. Servidores Cloud de Dados e Media</h3>
+                    <p><strong>Neon Postgres:</strong> Base de dados SQL escalável na cloud que gere toda a persistência de dados. <br><strong>Cloudinary:</strong> Armazenamento cloud externo seguro onde guardamos as imagens e ficheiros estáticos (com WhiteNoise).</p>
+                </div>
+                <div class="info-item" style="border-left-color: #6c757d;">
+                    <h3>7. Browser do Cliente</h3>
+                    <p>O utilizador acede ao site através do link público. O tráfego HTTP é processado e a aplicação dinâmica é desenhada no ecrã de forma responsiva.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. MAKING-OF -->
+        <div class="section-card">
+            <h2>9. Resumo de Desenvolvimento (Making-Of)</h2>
+            <p>Em baixo encontra-se o registo em tempo real do progresso e dificuldades sentidas ao longo das semanas (carregado dinamicamente do ficheiro markdown do projeto):</p>
+            <div class="markdown-content" style="background: #fafafa; padding: 25px; border: 1px solid #eaeaea; border-radius: 8px;">
                 {{ making_of_content|markdownify }}
             </div>
 
             <div style="margin-top: 20px; text-align: center;">
-                <a href="{% url 'makingof' %}"
-                    style="background: var(--primary); color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Abrir
-                    Making Ofs&rarr;</a>
+                <a href="{% url 'makingof' %}" style="background: var(--primary); color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Abrir Making Ofs &rarr;</a>
             </div>
         </div>
 
-        <!-- 9. CONTACTOS E REDES SOCIAIS -->
+        <!-- 10. CONTACTOS E REDES SOCIAIS -->
         <div class="section-card">
-            <h2>9. Contactos e Redes Sociais</h2>
+            <h2>10. Contactos e Redes Sociais</h2>
             <p>Podes entrar em contacto comigo ou acompanhar o meu percurso através das seguintes plataformas:</p>
             <div class="grid-info">
                 <div class="info-item" style="border-left-color: #0077b5;">
                     <h3>💼 LinkedIn</h3>
-                    <p>O meu perfil profissional.</p>
-                    <a href="https://linkedin.com/in/o-teu-linkedin" target="_blank" style="color: #0077b5; font-weight: bold; text-decoration: none;">Aceder ao LinkedIn &rarr;</a>
+                    <p>O meu perfil profissional e de rede de contactos académicos.</p>
+                    <a href="https://www.linkedin.com/in/iduartemt?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" style="color: #0077b5; font-weight: bold; text-decoration: none;">Aceder ao LinkedIn &rarr;</a>
                 </div>
                 <div class="info-item" style="border-left-color: #5865F2;">
                     <h3>🎮 Discord</h3>
-                    <p>Para contacto rápido ou dúvidas.</p>
-                    <a href="https://discord.com/users/o-teu-discord-id" target="_blank" style="color: #5865F2; font-weight: bold; text-decoration: none;">Adicionar no Discord &rarr;</a>
+                    <p>Para mensagens rápidas ou trabalho colaborativo.</p>
+                    <a href="https://discordapp.com/users/iduartemt" target="_blank" style="color: #5865F2; font-weight: bold; text-decoration: none;">Adicionar no Discord (iduartemt) &rarr;</a>
                 </div>
             </div>
         </div>
