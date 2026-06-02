@@ -1,4 +1,5 @@
 {% load markdownify %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -266,7 +267,7 @@
 
             <div class="img-box">
                 <h4>Desenho Manual da Arquitetura</h4>
-                <img src="/media/ciclo_funcionamento.jpeg" alt="Fotografia do desenho da Arquitetura MVT">
+                <img src="{% static 'portfolio/images/ciclo_funcionamento.jpeg' %}" alt="Fotografia do desenho da Arquitetura MVT">
                 <p style="font-size: 0.9em; color: #777; font-style: italic;">Representação do ciclo de vida de um
                     pedido HTTP no Django.</p>
             </div>
@@ -383,7 +384,7 @@
 
             <h3>Diagrama Entidade-Relação (Manual)</h3>
             <div class="img-box">
-                <img src="/media/makingof/Relacoes.jpeg" alt="Diagrama Entidade-Relação Manual">
+                <img src="{% static 'portfolio/images/makingof/Relacoes.jpeg' %}" alt="Diagrama Entidade-Relação Manual">
             </div>
 
         </div>
@@ -400,7 +401,7 @@
             <h2>7. Estrutura de Navegação da Aplicação</h2>
             <p>Mapa visual de como as páginas estão interligadas através das rotas e menus:</p>
             <div class="img-box">
-                <img src="/media/navegacao_aplicacao.jpeg" alt="Estrutura de Navegação da Aplicação">
+                <img src="{% static 'portfolio/images/navegacao_aplicacao.jpeg' %}" alt="Estrutura de Navegação da Aplicação">
             </div>
         </div>
 
@@ -433,7 +434,7 @@
 
             <div class="img-box">
                 <h4>Esquema Arquitetural e Pipeline CI/CD (Desenho à Mão no Papel)</h4>
-                <img src="/media/makingof/pipeline_cicd.jpeg" alt="Desenho Manual da Arquitetura e Pipeline CI/CD">
+                <img src="{% static 'portfolio/images/makingof/pipeline_cicd.jpeg' %}" alt="Desenho Manual da Arquitetura e Pipeline CI/CD">
                 <p style="font-size: 0.9em; color: #777; font-style: italic; margin-top: 10px;">Diagrama que ilustra a integração do desenvolvimento local, controlo com Git/GitHub, empacotamento com Docker, armazenamento cloud de dados e media, e o deploy automatizado.</p>
             </div>
 
