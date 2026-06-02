@@ -173,4 +173,17 @@ Abaixo encontra-se o extrato real dos commits mais recentes efetuados no reposit
 | `317bfef` | 2026-05-02 | feat: add views, URLs, and templates to render portfolio sections for courses, projects, and technologies |
 | `ca8d818` | 2026-05-02 | feat: implement academic curriculum page with grouped course list view |
 | `e2cb9bf` | 2026-05-02 | docs: update making_of documentation with database population test details |
-
+
+## 14. Integração da API RESTful de Receitas
+**Data:** 02/06/2026
+
+Foi integrada no portfólio uma API RESTful para gerir receitas culinárias, ingredientes e utilizadores.
+A API foi construída com Django Ninja e disponibiliza operações CRUD através dos métodos HTTP
+`GET`, `POST`, `PUT` e `DELETE`. A documentação Swagger é gerada automaticamente em `/api/docs`.
+
+### Reflexão
+A construção da API permitiu compreender melhor a separação entre páginas HTML e endpoints que
+devolvem dados estruturados em JSON. Os schemas ajudam a validar os dados recebidos e a documentação
+Swagger facilita a exploração e o teste dos endpoints. A integração no mesmo projeto Django também
+permitiu disponibilizar a API no ambiente de produção já existente.
+

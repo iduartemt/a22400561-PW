@@ -79,5 +79,8 @@ jobs:
             docker run -d --name ${{ env.STUDENT_ID }} --network vm-pw_pw-network --expose 3000 --env-file .env.deploy ghcr.io/${{ env.REPOSITORY }}/${{ github.event.repository.name }}:latest
             rm -f .env.deploy
 
+            echo "Applying database migrations..."
+            docker exec ${{ env.STUDENT_ID }} python manage.py migrate --noinput
+
             sleep 15
             docker logs ${{ env.STUDENT_ID }}

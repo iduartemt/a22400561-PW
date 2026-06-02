@@ -80,6 +80,36 @@
 
     <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
 
+    <div class="makingof-card">
+        <h3>Integração da API RESTful de Receitas</h3>
+
+        <div class="meta-info">
+            <strong>Tipo:</strong> Integração |
+            <strong>Entidade Afetada:</strong> API RESTful
+        </div>
+
+        <div class="seccao">
+            <h4>📝 Descrição do Processo</h4>
+            <p>
+                Foi integrada uma API RESTful para gerir receitas, ingredientes e utilizadores.
+                A API utiliza Django Ninja e disponibiliza operações CRUD através dos métodos HTTP
+                GET, POST, PUT e DELETE. A documentação Swagger é gerada automaticamente e está
+                acessível através da opção API Receitas no menu principal.
+            </p>
+        </div>
+
+        <div class="seccao">
+            <h4>🧠 Reflexão</h4>
+            <p>
+                A construção da API permitiu compreender melhor a separação entre a interface HTML
+                e o acesso estruturado aos dados em JSON. A definição de schemas ajuda a validar os
+                dados recebidos, enquanto os endpoints tornam os recursos reutilizáveis por outras
+                aplicações. A documentação Swagger facilitou os testes e tornou o funcionamento da
+                API mais claro.
+            </p>
+        </div>
+    </div>
+
     {% for registo in registos %}
     <div class="makingof-card">
         <h3>{{ registo.titulo }}</h3>
