@@ -1,6 +1,7 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
 import os
+import requests
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno, Competencia, Formacao, MakingOf
@@ -345,3 +346,26 @@ def sobre_view(request):
 
 def videos_view(request):
     return render(request, 'portfolio/videos.html')
+
+def api_externa_view(request):
+    url_api = "https://nunotainha22402866.pw.deisi.ulusofona.pt/api/pessoas/"
+    pessoas = []
+    erro = None
+
+    try:
+        session = requests.Session()
+        session.trust_env = False
+        response = session.get(url_api, verify=False, timeout=10)
+        if response.status_code == 200:
+            pessoas = response.json()
+        else:
+            erro = f"A API respondeu com o codigo {response.status_code}."
+    except requests.RequestException as e:
+        erro = f"Nao foi possivel obter dados da API externa. ({e})"
+
+    return render(request, 'portfolio/api_externa.html', {
+        'pessoas': pessoas,
+        'erro': erro,
+        'url_api': url_api,
+        'url_docs': "https://nunotainha22402866.pw.deisi.ulusofona.pt/api/docs",
+    })
