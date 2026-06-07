@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from receitas.api import api
+from api_receitas.api import api
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'artigos',
     'receitas',
+    'api_receitas',
 ]
 
 MARKDOWNIFY = {
