@@ -364,6 +364,7 @@ def colega_api_request(method, endpoint, **kwargs):
         f"{COLEGA_API_BASE_URL}{endpoint}",
         headers=headers,
         timeout=10,
+        verify=False,
         **kwargs
     )
 
