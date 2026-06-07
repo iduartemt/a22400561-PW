@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Apagar jogo</title>
+</head>
+<body>
+    <h1>Apagar jogo</h1>
+    <p><a href="{% url 'api_externa' %}">Voltar a lista</a></p>
+
+    {% if erro %}
+        <p style="color: red;">{{ erro }}</p>
+    {% endif %}
+
+    {% if jogo %}
+        <p>Tens a certeza que queres apagar o jogo <strong>{{ jogo.titulo }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Sim, apagar</button>
+            <a href="{% url 'api_jogo_detail' jogo.id %}">Cancelar</a>
+        </form>
+    {% else %}
+        <p>Jogo nao encontrado.</p>
+    {% endif %}
+</body>
+</html>

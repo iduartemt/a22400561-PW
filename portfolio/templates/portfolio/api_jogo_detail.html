@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhe do jogo</title>
+</head>
+<body>
+    <h1>Detalhe do jogo</h1>
+    <p><a href="{% url 'api_externa' %}">Voltar a lista</a> | <a href="{{ url_docs }}" target="_blank">Swagger</a></p>
+
+    {% if erro %}
+        <p style="color: red;">{{ erro }}</p>
+    {% endif %}
+
+    {% if jogo %}
+        <p><strong>ID:</strong> {{ jogo.id }}</p>
+        <p><strong>Titulo:</strong> {{ jogo.titulo }}</p>
+        <p><strong>Ano:</strong> {{ jogo.ano_lancamento }}</p>
+        <p><strong>Genero:</strong> {{ jogo.genero }}</p>
+        <p><strong>Descricao:</strong> {{ jogo.descricao }}</p>
+        <p><strong>Numero de jogadores:</strong> {{ jogo.numero_jogadores }}</p>
+        <p><strong>Multiplayer:</strong> {{ jogo.multiplayer }}</p>
+        <p><strong>Classificacao:</strong> {{ jogo.classificacao }}</p>
+        <p><strong>Nota:</strong> {{ jogo.nota }}</p>
+        <p><strong>ID da consola:</strong> {{ jogo.consola_id }}</p>
+        <p><strong>ID da desenvolvedora:</strong> {{ jogo.desenvolvedora_id }}</p>
+
+        <p>
+            <a href="{% url 'api_jogo_editar' jogo.id %}">Editar</a>
+            <a href="{% url 'api_jogo_apagar' jogo.id %}">Apagar</a>
+        </p>
+    {% endif %}
+</body>
+</html>
