@@ -6,6 +6,8 @@ from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 from django.contrib.auth.models import User, Group
 from django.urls import reverse
 
+DEFAULT_AUTH_BACKEND = 'django.contrib.auth.backends.ModelBackend'
+
 # View de Registo
 def registo_view(request):
     if request.method == 'POST':
@@ -17,7 +19,7 @@ def registo_view(request):
             grupo_bloggers, created = Group.objects.get_or_create(name='bloggers')
             user.groups.add(grupo_bloggers)
             
-            login(request, user) # Faz login automático após o registo
+            login(request, user, backend=DEFAULT_AUTH_BACKEND) # Faz login automático após o registo
             return redirect('home')
     else:
         form = RegistoForm()
@@ -83,7 +85,7 @@ def login_link_view(request, token):
         user = User.objects.get(username=username)
         
         # Faz Login automático!
-        login(request, user)
+        login(request, user, backend=DEFAULT_AUTH_BACKEND)
         return redirect('home')
         
     except (BadSignature, SignatureExpired, User.DoesNotExist):
