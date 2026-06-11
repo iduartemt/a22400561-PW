@@ -370,6 +370,13 @@ def colega_api_request(method, endpoint, **kwargs):
 
 
 def jogo_payload(post_data):
+    consolas_texto = post_data.get("consolas_ids", "1")
+    consolas_ids = [
+        int(valor.strip())
+        for valor in consolas_texto.split(",")
+        if valor.strip()
+    ]
+
     return {
         "titulo": post_data.get("titulo", ""),
         "ano_lancamento": int(post_data.get("ano_lancamento") or 0),
@@ -379,7 +386,7 @@ def jogo_payload(post_data):
         "multiplayer": post_data.get("multiplayer") == "on",
         "classificacao": post_data.get("classificacao", ""),
         "nota": float(post_data.get("nota") or 0),
-        "consola_id": int(post_data.get("consola_id") or 1),
+        "consolas_ids": consolas_ids,
         "desenvolvedora_id": int(post_data.get("desenvolvedora_id") or 1),
     }
 
