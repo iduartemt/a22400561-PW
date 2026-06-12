@@ -134,7 +134,17 @@ def formacoes_view(request):
 def makingof_view(request):
     # Vai buscar todos os registos do Making Of, do mais recente para o mais antigo
     registos = MakingOf.objects.all().order_by('-data')
-    context = {'registos': registos}
+    making_of_md_path = os.path.join(settings.BASE_DIR, 'making_of.md')
+    try:
+        with open(making_of_md_path, 'r', encoding='utf-8') as f:
+            making_of_content = f.read()
+    except Exception as e:
+        making_of_content = f"O ficheiro 'making_of.md' não foi encontrado. ({e})"
+
+    context = {
+        'registos': registos,
+        'making_of_content': making_of_content,
+    }
     return render(request, 'portfolio/makingof.html', context)
 
 @login_required
