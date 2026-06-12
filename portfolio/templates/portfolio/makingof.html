@@ -1,5 +1,4 @@
 {% load static %}
-{% load markdownify %}
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -75,26 +74,6 @@
             color: #000;
         }
 
-        .markdown-content {
-            background-color: #fff;
-            padding: 24px;
-            margin-bottom: 30px;
-            border: 1px solid #e1e4e6;
-            border-radius: 8px;
-            line-height: 1.6;
-        }
-
-        .markdown-content h2 {
-            margin-top: 28px;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 8px;
-        }
-
-        .markdown-content code {
-            background: #f1f3f5;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
     </style>
 </head>
 
@@ -102,12 +81,6 @@
     <h1>Making Of</h1>
 
     <p><a class="back-btn" href="{% url 'home' %}">⬅ Voltar ao Menu Principal</a></p>
-
-    {% if making_of_content %}
-    <div class="markdown-content">
-        {{ making_of_content|markdownify }}
-    </div>
-    {% endif %}
 
     {% for registo in registos %}
     <div class="makingof-card">
