@@ -1,6 +1,7 @@
 # Views do Django para renderizar as páginas do portfolio.
 # Aqui carregamos os dados dos modelos e enviamos para os templates.
 import os
+import requests
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Licenciatura, UnidadeCurricular, Projeto, Tecnologia, TFC, Docente, Aluno, Competencia, Formacao, MakingOf
@@ -345,3 +346,181 @@ def sobre_view(request):
 
 def videos_view(request):
     return render(request, 'portfolio/videos.html')
+
+COLEGA_API_BASE_URL = os.getenv("COLEGA_API_BASE_URL", "https://duarte-verissimo-22303434.pw.deisi.ulusofona.pt/api")
+COLEGA_API_KEY = os.getenv("COLEGA_API_KEY", "")
+COLEGA_API_DOCS_URL = os.getenv("COLEGA_API_DOCS_URL", f"{COLEGA_API_BASE_URL}/docs")
+
+
+def colega_api_request(method, endpoint, **kwargs):
+    headers = kwargs.pop("headers", {})
+    if COLEGA_API_KEY:
+        headers["X-API-Key"] = COLEGA_API_KEY
+
+    session = requests.Session()
+    session.trust_env = False
+
+    return session.request(
+        method,
+        f"{COLEGA_API_BASE_URL}{endpoint}",
+        headers=headers,
+        timeout=10,
+        verify=False,
+        **kwargs
+    )
+
+
+def jogo_payload(post_data):
+    consolas_texto = post_data.get("consolas_ids", "1")
+    consolas_ids = [
+        int(valor.strip())
+        for valor in consolas_texto.split(",")
+        if valor.strip()
+    ]
+
+    return {
+        "titulo": post_data.get("titulo", ""),
+        "ano_lancamento": int(post_data.get("ano_lancamento") or 0),
+        "genero": post_data.get("genero", ""),
+        "descricao": post_data.get("descricao", ""),
+        "numero_jogadores": int(post_data.get("numero_jogadores") or 1),
+        "multiplayer": post_data.get("multiplayer") == "on",
+        "classificacao": post_data.get("classificacao", ""),
+        "nota": float(post_data.get("nota") or 0),
+        "consolas_ids": consolas_ids,
+        "desenvolvedora_id": int(post_data.get("desenvolvedora_id") or 1),
+    }
+
+
+def ordenar_jogos(jogos, ordenacao):
+    if ordenacao == "titulo":
+        return sorted(jogos, key=lambda jogo: jogo.get("titulo", "").lower())
+    if ordenacao == "ano":
+        return sorted(jogos, key=lambda jogo: jogo.get("ano_lancamento") or 0)
+    if ordenacao == "nota":
+        return sorted(jogos, key=lambda jogo: float(jogo.get("nota") or 0), reverse=True)
+    return jogos
+
+
+def api_externa_view(request):
+    jogos = []
+    erro = None
+
+    if request.method == "POST":
+        try:
+            response = colega_api_request("POST", "/jogos", json=jogo_payload(request.POST))
+            if response.status_code == 200:
+                return redirect("api_externa")
+            erro = f"Erro ao criar jogo. Codigo: {response.status_code}"
+        except (ValueError, requests.RequestException) as e:
+            erro = f"Nao foi possivel criar o jogo. ({e})"
+
+    parametros = {}
+    titulo = request.GET.get("titulo", "")
+    genero = request.GET.get("genero", "")
+    ano_lancamento = request.GET.get("ano_lancamento", "")
+    ordenacao = request.GET.get("ordenacao", "")
+
+    if titulo:
+        parametros["titulo"] = titulo
+    if genero:
+        parametros["genero"] = genero
+    if ano_lancamento:
+        parametros["ano_lancamento"] = ano_lancamento
+
+    try:
+        response = colega_api_request("GET", "/jogos", params=parametros)
+        if response.status_code == 200:
+            jogos = ordenar_jogos(response.json(), ordenacao)
+        else:
+            erro = f"A API respondeu com o codigo {response.status_code}."
+    except requests.RequestException as e:
+        erro = f"Nao foi possivel obter dados da API externa. ({e})"
+
+    return render(request, 'portfolio/api_externa.html', {
+        'jogos': jogos,
+        'erro': erro,
+        'url_api': f"{COLEGA_API_BASE_URL}/jogos",
+        'url_docs': COLEGA_API_DOCS_URL,
+        'titulo': titulo,
+        'genero': genero,
+        'ano_lancamento': ano_lancamento,
+        'ordenacao': ordenacao,
+    })
+
+
+def api_jogo_detail_view(request, jogo_id):
+    erro = None
+    jogo = None
+
+    try:
+        response = colega_api_request("GET", f"/jogos/{jogo_id}")
+        if response.status_code == 200:
+            jogo = response.json()
+        else:
+            erro = f"A API respondeu com o codigo {response.status_code}."
+    except requests.RequestException as e:
+        erro = f"Nao foi possivel obter o jogo. ({e})"
+
+    return render(request, "portfolio/api_jogo_detail.html", {
+        "jogo": jogo,
+        "erro": erro,
+        "url_docs": COLEGA_API_DOCS_URL,
+    })
+
+
+def api_jogo_editar_view(request, jogo_id):
+    erro = None
+    jogo = None
+
+    if request.method == "POST":
+        try:
+            response = colega_api_request("PUT", f"/jogos/{jogo_id}", json=jogo_payload(request.POST))
+            if response.status_code == 200:
+                return redirect("api_jogo_detail", jogo_id=jogo_id)
+            erro = f"Erro ao editar jogo. Codigo: {response.status_code}"
+        except (ValueError, requests.RequestException) as e:
+            erro = f"Nao foi possivel editar o jogo. ({e})"
+
+    try:
+        response = colega_api_request("GET", f"/jogos/{jogo_id}")
+        if response.status_code == 200:
+            jogo = response.json()
+        else:
+            erro = erro or f"A API respondeu com o codigo {response.status_code}."
+    except requests.RequestException as e:
+        erro = erro or f"Nao foi possivel obter o jogo. ({e})"
+
+    return render(request, "portfolio/api_jogo_form.html", {
+        "jogo": jogo,
+        "erro": erro,
+        "titulo_pagina": "Editar jogo",
+    })
+
+
+def api_jogo_apagar_view(request, jogo_id):
+    erro = None
+    jogo = None
+
+    if request.method == "POST":
+        try:
+            response = colega_api_request("DELETE", f"/jogos/{jogo_id}")
+            if response.status_code == 200:
+                return redirect("api_externa")
+            erro = f"Erro ao apagar jogo. Codigo: {response.status_code}"
+        except requests.RequestException as e:
+            erro = f"Nao foi possivel apagar o jogo. ({e})"
+
+    try:
+        response = colega_api_request("GET", f"/jogos/{jogo_id}")
+        if response.status_code == 200:
+            jogo = response.json()
+    except requests.RequestException:
+        jogo = None
+
+    return render(request, "portfolio/api_jogo_confirm_delete.html", {
+        "jogo": jogo,
+        "erro": erro,
+    })
+
+

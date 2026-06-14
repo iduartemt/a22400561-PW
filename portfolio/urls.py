@@ -35,4 +35,8 @@ urlpatterns = [
     path('formacao/<int:formacao_id>/apagar/', views.apaga_formacao_view, name='apaga_formacao'),
     path('sobre/', views.sobre_view, name='sobre'),
     path('videos/', views.videos_view, name='videos'),
+    path('api-externa/', views.api_externa_view, name='api_externa'),
+    path('api-externa/jogos/<int:jogo_id>/', views.api_jogo_detail_view, name='api_jogo_detail'),
+    path('api-externa/jogos/<int:jogo_id>/editar/', views.api_jogo_editar_view, name='api_jogo_editar'),
+    path('api-externa/jogos/<int:jogo_id>/apagar/', views.api_jogo_apagar_view, name='api_jogo_apagar'),
 ]

@@ -173,4 +173,54 @@ Abaixo encontra-se o extrato real dos commits mais recentes efetuados no reposit
 | `317bfef` | 2026-05-02 | feat: add views, URLs, and templates to render portfolio sections for courses, projects, and technologies |
 | `ca8d818` | 2026-05-02 | feat: implement academic curriculum page with grouped course list view |
 | `e2cb9bf` | 2026-05-02 | docs: update making_of documentation with database population test details |
-
+
+## 14. Integração da API RESTful de Receitas
+**Data:** 02/06/2026
+
+Foi integrada no portfólio uma API RESTful para gerir receitas culinárias, ingredientes e utilizadores.
+A API foi construída com Django Ninja e disponibiliza operações CRUD através dos métodos HTTP
+`GET`, `POST`, `PUT` e `DELETE`. A documentação Swagger é gerada automaticamente em `/api/docs`.
+
+### Reflexão
+A construção da API permitiu compreender melhor a separação entre páginas HTML e endpoints que
+devolvem dados estruturados em JSON. Os schemas ajudam a validar os dados recebidos e a documentação
+Swagger facilita a exploração e o teste dos endpoints. A integração no mesmo projeto Django também
+permitiu disponibilizar a API no ambiente de produção já existente.
+
+
+## 15. Integração de uma API Externa de Jogos
+**Data:** 11/06/2026
+
+Foi criada no portfólio uma página dedicada ao consumo da API externa de Jogos desenvolvida por um colega. Esta página está disponível em `/api-externa/` e demonstra a comunicação entre duas aplicações Django independentes através de endpoints REST.
+
+### Funcionalidades Implementadas
+- Listagem dos jogos obtidos através do endpoint `GET /api/jogos`.
+- Filtros por título, género e ano de lançamento.
+- Ordenação local dos resultados por título, ano ou nota.
+- Consulta do detalhe de cada jogo.
+- Operações de criação, edição e remoção de jogos através de pedidos `POST`, `PUT` e `DELETE`.
+- Utilização do header `X-API-Key` nas operações protegidas.
+
+### Decisões Técnicas
+A integração foi implementada nas views do Django com a biblioteca `requests`, mantendo a página dentro da estrutura MVT já utilizada no portfólio. A comunicação com a API externa foi concentrada numa função auxiliar, responsável por construir os pedidos HTTP, adicionar o header da API Key e definir um tempo limite para evitar que a aplicação fique bloqueada caso a API externa não responda.
+
+Para a interface, foram criados templates simples para a listagem, detalhe, edição e confirmação de eliminação. Esta abordagem permitiu separar a apresentação da lógica de comunicação com a API, tornando o código mais fácil de compreender e testar.
+
+### Dificuldades Encontradas
+Durante o desenvolvimento, a API externa sofreu uma alteração no modelo de dados: inicialmente cada jogo estava associado apenas a uma consola através do campo `consola_id`, mas passou a poder pertencer a várias consolas. Com esta mudança, os pedidos de criação e edição deixaram de aceitar `consola_id` e passaram a exigir `consolas_ids`, uma lista de identificadores.
+
+Esta alteração originou erros `422` ao criar jogos, pois o payload enviado pelo portfólio já não correspondia ao schema esperado pela API externa. A correção consistiu em adaptar os formulários para aceitarem vários IDs de consolas e converter o texto introduzido pelo utilizador, por exemplo `1,2,3`, numa lista Python `[1, 2, 3]`.
+
+### Correções Realizadas
+- Substituição de `consola_id` por `consolas_ids` no payload enviado para a API.
+- Alteração dos formulários para permitir a introdução de vários IDs de consolas.
+- Atualização da página de detalhe para apresentar a lista de consolas associadas ao jogo.
+- Testes locais ao payload para confirmar que `1,2,3` era convertido corretamente em `[1, 2, 3]`.
+- Teste real ao endpoint `GET /api/jogos`, confirmando que a API externa respondia com `200` e devolvia `consolas_ids`.
+
+### Reflexão
+Esta integração ajudou a perceber melhor a diferença entre desenvolver uma API e consumir uma API criada por outra pessoa. Quando a API pertence ao próprio projeto, é mais fácil controlar o modelo de dados e prever as alterações. Ao consumir uma API externa, é necessário adaptar a aplicação às decisões de outro programador, lidar com mudanças nos schemas e testar cuidadosamente os formatos enviados e recebidos.
+
+O erro `422` foi particularmente útil para compreender a importância da validação dos dados. A página não estava necessariamente errada na sua estrutura, mas estava desatualizada em relação ao contrato da API. Esta situação mostrou que uma integração entre sistemas depende não só do código funcionar, mas também de existir alinhamento entre quem fornece a API e quem a consome.
+
+No final, a página da API externa tornou o portfólio mais completo, porque demonstra uma competência essencial no desenvolvimento web: integrar dados vindos de outro serviço, tratar respostas JSON, autenticar pedidos com API Key e adaptar a interface quando o modelo de dados evolui.

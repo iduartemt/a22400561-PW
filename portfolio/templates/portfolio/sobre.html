@@ -1,4 +1,5 @@
 {% load markdownify %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -266,7 +267,7 @@
 
             <div class="img-box">
                 <h4>Desenho Manual da Arquitetura</h4>
-                <img src="/media/ciclo_funcionamento.jpeg" alt="Fotografia do desenho da Arquitetura MVT">
+                <img src="{% static 'portfolio/images/ciclo_funcionamento.jpeg' %}" alt="Fotografia do desenho da Arquitetura MVT">
                 <p style="font-size: 0.9em; color: #777; font-style: italic;">Representação do ciclo de vida de um
                     pedido HTTP no Django.</p>
             </div>
@@ -323,7 +324,34 @@
 
         <!-- 3. TECNOLOGIAS -->
         <div class="section-card">
-            <h2>3. Stack Tecnológica da Aplicação</h2>
+            <h2>3. API RESTful com Django Ninja</h2>
+            <p>
+                Esta aplicação disponibiliza uma API RESTful dedicada à gestão de receitas culinárias.
+                Uma API RESTful expõe recursos através de endereços HTTP e utiliza métodos como
+                <code>GET</code>, <code>POST</code>, <code>PUT</code> e <code>DELETE</code> para consultar,
+                criar, atualizar e apagar dados.
+            </p>
+
+            <p>
+                A API foi construída com <strong>Django Ninja</strong>, uma biblioteca que permite definir
+                endpoints tipados em Python e gerar automaticamente documentação interativa no formato
+                OpenAPI. Os recursos disponíveis são receitas, ingredientes e utilizadores.
+            </p>
+
+            <div class="placeholder-alert" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724;">
+                <strong>Documentação Swagger:</strong>
+                <a href="/api/docs" target="_blank" style="font-weight: bold; color: #155724;">Explorar a API de Receitas</a>
+            </div>
+
+            <div class="placeholder-alert" style="background-color: #e8f4ff; border-color: #b8daff; color: #004085;">
+                <strong>API de um colega:</strong>
+                <a href="{% url 'api_externa' %}" style="font-weight: bold; color: #004085;">Ver dados consumidos da API externa</a>
+            </div>
+        </div>
+
+        <!-- 4. TECNOLOGIAS -->
+        <div class="section-card">
+            <h2>4. Stack Tecnológica da Aplicação</h2>
             <p>Esta secção lista as tecnologias utilizadas especificamente na construção deste Portfolio, agrupadas por
                 categoria.</p>
 
@@ -355,36 +383,36 @@
             {% endif %}
         </div>
 
-        <!-- 4. MODELAÇÃO E DER -->
+        <!-- 5. MODELAÇÃO E DER -->
         <div class="section-card">
-            <h2>4. Modelação da Base de Dados</h2>
+            <h2>5. Modelação da Base de Dados</h2>
 
             <h3>Diagrama Entidade-Relação (Manual)</h3>
             <div class="img-box">
-                <img src="/media/makingof/Relacoes.jpeg" alt="Diagrama Entidade-Relação Manual">
+                <img src="{% static 'portfolio/images/makingof/Relacoes.jpeg' %}" alt="Diagrama Entidade-Relação Manual">
             </div>
 
         </div>
 
-        <!-- 5. CÓDIGO DOS MODELOS -->
+        <!-- 6. CÓDIGO DOS MODELOS -->
         <div class="section-card">
-            <h2>5. Modelação Programática (models.py)</h2>
+            <h2>6. Modelação Programática (models.py)</h2>
             <p>Abaixo podes consultar a definição real das tabelas no ficheiro de código Python:</p>
             <pre><code>{{ models_code }}</code></pre>
         </div>
 
-        <!-- 6. ESTRUTURA DE NAVEGAÇÃO -->
+        <!-- 7. ESTRUTURA DE NAVEGAÇÃO -->
         <div class="section-card">
-            <h2>6. Estrutura de Navegação da Aplicação</h2>
+            <h2>7. Estrutura de Navegação da Aplicação</h2>
             <p>Mapa visual de como as páginas estão interligadas através das rotas e menus:</p>
             <div class="img-box">
-                <img src="/media/navegacao_aplicacao.jpeg" alt="Estrutura de Navegação da Aplicação">
+                <img src="{% static 'portfolio/images/navegacao_aplicacao.jpeg' %}" alt="Estrutura de Navegação da Aplicação">
             </div>
         </div>
 
-        <!-- 7. GITHUB -->
+        <!-- 8. GITHUB -->
         <div class="section-card">
-            <h2>7. Repositório GitHub</h2>
+            <h2>8. Repositório GitHub</h2>
             <p>O código-fonte deste projeto encontra-se alojado no GitHub, garantindo versionamento e integridade do código.</p>
             <div class="placeholder-alert" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724;">
                 <strong>🔗 Link para Repositório:</strong>
@@ -404,14 +432,14 @@
             </div>
         </div>
 
-        <!-- 8. ARQUITETURA EM PRODUÇÃO E PIPELINE CI/CD -->
+        <!-- 9. ARQUITETURA EM PRODUÇÃO E PIPELINE CI/CD -->
         <div class="section-card">
-            <h2>8. Arquitetura da Solução em Produção e Pipeline CI/CD</h2>
+            <h2>9. Arquitetura da Solução em Produção e Pipeline CI/CD</h2>
             <p>Para além do ciclo de funcionamento local, a aplicação foi arquitetada para correr de forma profissional e resiliente na nuvem de produção. Mapeámos e desenhámos à mão o fluxo que liga o computador local ao servidor final.</p>
 
             <div class="img-box">
                 <h4>Esquema Arquitetural e Pipeline CI/CD (Desenho à Mão no Papel)</h4>
-                <img src="/media/makingof/pipeline_cicd.jpeg" alt="Desenho Manual da Arquitetura e Pipeline CI/CD">
+                <img src="{% static 'portfolio/images/makingof/pipeline_cicd.jpeg' %}" alt="Desenho Manual da Arquitetura e Pipeline CI/CD">
                 <p style="font-size: 0.9em; color: #777; font-style: italic; margin-top: 10px;">Diagrama que ilustra a integração do desenvolvimento local, controlo com Git/GitHub, empacotamento com Docker, armazenamento cloud de dados e media, e o deploy automatizado.</p>
             </div>
 
@@ -448,9 +476,9 @@
             </div>
         </div>
 
-        <!-- 9. MAKING-OF -->
+        <!-- 10. MAKING-OF -->
         <div class="section-card">
-            <h2>9. Resumo de Desenvolvimento (Making-Of)</h2>
+            <h2>10. Resumo de Desenvolvimento (Making-Of)</h2>
             <p>Em baixo encontra-se o registo em tempo real do progresso e dificuldades sentidas ao longo das semanas (carregado dinamicamente do ficheiro markdown do projeto):</p>
             <div class="markdown-content" style="background: #fafafa; padding: 25px; border: 1px solid #eaeaea; border-radius: 8px;">
                 {{ making_of_content|markdownify }}
@@ -461,9 +489,9 @@
             </div>
         </div>
 
-        <!-- 10. CONTACTOS E REDES SOCIAIS -->
+        <!-- 11. CONTACTOS E REDES SOCIAIS -->
         <div class="section-card">
-            <h2>10. Contactos e Redes Sociais</h2>
+            <h2>11. Contactos e Redes Sociais</h2>
             <p>Podes entrar em contacto comigo ou acompanhar o meu percurso através das seguintes plataformas:</p>
             <div class="grid-info">
                 <div class="info-item" style="border-left-color: #0077b5;">

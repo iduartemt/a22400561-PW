@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -72,6 +73,7 @@
             text-decoration: underline;
             color: #000;
         }
+
     </style>
 </head>
 
@@ -150,7 +152,15 @@
         {% if registo.imagem %}
         <div class="img-container">
             <h4>📷 Imagem / Screenshot</h4>
-            <img src="/media/{{ registo.imagem }}" alt="Evidência do Making Of">
+            {% if registo.imagem.name == "makingof/pipeline_cicd.jpeg" %}
+            <img src="{% static 'portfolio/images/makingof/pipeline_cicd.jpeg' %}" alt="Evidência do Making Of">
+            {% elif registo.imagem.name == "makingof/Relacoes.jpeg" %}
+            <img src="{% static 'portfolio/images/makingof/Relacoes.jpeg' %}" alt="Evidência do Making Of">
+            {% elif registo.imagem.name == "makingof/admin_docente.png" %}
+            <img src="{% static 'portfolio/images/makingof/admin_docente.png' %}" alt="Evidência do Making Of">
+            {% else %}
+            <img src="{{ registo.imagem.url }}" alt="Evidência do Making Of">
+            {% endif %}
         </div>
         {% endif %}
     </div>
